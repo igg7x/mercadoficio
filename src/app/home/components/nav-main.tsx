@@ -1,5 +1,5 @@
 "use client";
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight,Layers ,type LucideIcon } from "lucide-react"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
@@ -29,24 +29,24 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      {/* <SidebarGroupLabel className="text-base">Menu</SidebarGroupLabel> */}
+      <SidebarGroupLabel className="text-lg flex items-center gap-1   font-semibold text-center">
+        <Layers/>
+        Menu</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
+                  <Link   href={item.url}>
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
                 <SidebarMenuButton tooltip={item.title}>
-                  <Link className="flex
-                  items-center  gap-2 "  href={item.url}>
                   {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                  </Link>
                   {item.items && (
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   )}
                 </SidebarMenuButton>
               </CollapsibleTrigger>
-              {item.items && (
+              {/* {item.items && (
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {item.items?.map((subItem) => (
@@ -60,8 +60,9 @@ export function NavMain({
                     ))}
                   </SidebarMenuSub>
                 </CollapsibleContent>
-              )}
+              )} */}
             </SidebarMenuItem>
+                    </Link>
           </Collapsible>
         ))}
       </SidebarMenu>

@@ -7,35 +7,8 @@ import { User, Search, Star, Bell, ArrowRight, Briefcase, TrendingUp } from "luc
 const HomePage = ({children} : {children : React.ReactNode}) => {
   return (
  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Header */}
-      {/* <header className="bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                  <Briefcase className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-slate-900">MercadOficio</span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="relative">
-                <Bell className="w-5 h-5" />
-                <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center bg-emerald-500 text-xs">
-                  3
-                </Badge>
-              </Button>
-              <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                <User className="w-5 h-5 text-emerald-600" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </header> */}
-
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4 py-4">
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>

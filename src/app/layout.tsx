@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Work_Sans, Open_Sans } from "next/font/google"
 import { inter } from "./ui/fonts";
+import AppLayout from "./home/layout";
 const workSans = Work_Sans({
   subsets: ["latin"],
   display: "swap",

@@ -1,149 +1,158 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
+  Edit,
+  Star,
   MapPin,
   Mail,
   Phone,
-  Star,
-  Edit3,
-  Camera,
+  Calendar,
   Award,
   Briefcase,
-  Calendar,
-  MessageCircle,
+  Camera,
+  CheckCircle,
   Heart,
-  TrendingUp,
-  CheckCircle2,
   Users,
+  Trophy,
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Label } from "@/components/ui/label"
 
-export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState("profile")
-
-  const userStats = [
-    { label: "Trabajos Completados", value: "24", icon: CheckCircle2, color: "text-emerald-600" },
-    { label: "Calificación Promedio", value: "4.8", icon: Star, color: "text-yellow-500" },
-    { label: "Clientes Satisfechos", value: "22", icon: Heart, color: "text-rose-500" },
-    { label: "Años de Experiencia", value: "5+", icon: Award, color: "text-blue-500" },
-  ]
-
-  const categories = [
-    { name: "Construcción y Carpintería", active: true },
-    { name: "Salud y Cuidado Personal", active: true },
-    { name: "Educación", active: true },
-    { name: "Servicios Alimentarios", active: true },
-    { name: "Tecnología", active: false },
-    { name: "Diseño Gráfico", active: false },
-  ]
-
-  const recentReviews = [
+const mockUser = {
+  name: "Ignacio Gonzalez",
+  email: "ignagonzalez2003@gmail.com",
+  phone: "+56 9 1234 5678",
+  location: "No especificado",
+  joinDate: "Enero 2023",
+  rating: 4.8,
+  reviewCount: 24,
+  completedJobs: 24,
+  satisfiedClients: 22,
+  yearsExperience: "5+",
+  verified: true,
+  bio: "El usuario no ha escrito una biografía por el momento",
+  categories: ["Construcción y Carpintería", "Salud y Cuidado Personal", "Educación", "Servicios Alimentarios"],
+  reviews: [
     {
-      id: 1,
-      client: "María Rodriguez",
+      client: "María Rodríguez",
+      service: "Remodelación de cocina",
       rating: 5,
       comment: "Excelente trabajo, muy profesional y puntual. Recomendado 100%.",
-      date: "2024-01-15",
-      project: "Remodelación de cocina",
+      date: "14/1/2024",
+      initials: "MR",
     },
     {
-      id: 2,
       client: "Carlos Mendez",
+      service: "Instalación de pisos",
       rating: 5,
       comment: "Superó mis expectativas. Trabajo de calidad y gran atención al detalle.",
-      date: "2024-01-10",
-      project: "Instalación de pisos",
+      date: "9/1/2024",
+      initials: "CM",
     },
     {
-      id: 3,
       client: "Ana García",
+      service: "Pintura interior",
       rating: 4,
-      comment: "Muy buen servicio, entrega a tiempo y excelente comunicación.",
-      date: "2024-01-05",
-      project: "Pintura de casa",
+      comment: "Buen trabajo en general, cumplió con los tiempos acordados.",
+      date: "28/12/2023",
+      initials: "AG",
     },
-  ]
+  ],
+}
+
+export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState(false)
+  const [activeTab, setActiveTab] = useState("perfil")
+  const [editData, setEditData] = useState({
+    name: mockUser.name,
+    email: mockUser.email,
+    phone: mockUser.phone,
+    location: mockUser.location,
+    bio: mockUser.bio,
+  })
+
+  const handleSave = () => {
+    console.log("Saving profile data:", editData)
+    setIsEditing(false)
+  }
+
+  const handleCancel = () => {
+    setEditData({
+      name: mockUser.name,
+      email: mockUser.email,
+      phone: mockUser.phone,
+      location: mockUser.location,
+      bio: mockUser.bio,
+    })
+    setIsEditing(false)
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30">
-      {/* Hero Section with Cover */}
-      <div className="relative">
-        {/* Cover Image */}
-        <div className="h-64 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-          {/* Decorative Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 left-10 w-32 h-32 border border-white/30 rounded-full"></div>
-            <div className="absolute top-20 right-20 w-24 h-24 border border-white/20 rounded-full"></div>
-            <div className="absolute bottom-10 left-1/3 w-16 h-16 border border-white/25 rounded-full"></div>
-          </div>
-        </div>
-
-        {/* Profile Header */}
-        <div className="relative -mt-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-                {/* Avatar */}
-                <div className="relative group">
-                  <Avatar className="w-32 h-32 border-4 border-white shadow-lg ring-4 ring-emerald-100">
-                    <AvatarImage
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-p2rnPR0KX7CiAKIIZvEUQPr54IZk3f.png"
-                      alt="Ignacio Gonzalez"
-                    />
-                    <AvatarFallback className="text-2xl font-semibold bg-emerald-100 text-emerald-700">
-                      IG
-                    </AvatarFallback>
-                  </Avatar>
-                  <Button
-                    size="sm"
-                    className="absolute -bottom-2 -right-2 rounded-full w-10 h-10 p-0 bg-emerald-600 hover:bg-emerald-700 shadow-lg"
-                  >
-                    <Camera className="w-4 h-4" />
-                  </Button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="bg-emerald-600 pt-8 pb-20 sm:px-6 lg:px-16">
+        <div className="w-full mx-auto">
+          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              {/* Profile Image */}
+              <div className="relative flex-shrink-0">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center border-4 border-emerald-100">
+                  <span className="text-xl sm:text-2xl font-bold text-emerald-600">
+                    {mockUser.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </span>
                 </div>
-
-                {/* User Info */}
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center gap-3">
-                    <h1 className="text-3xl font-bold text-gray-900">Ignacio Gonzalez</h1>
-                    <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
-                      <CheckCircle2 className="w-3 h-3 mr-1" />
-                      Verificado
-                    </Badge>
-                  </div>
-                  <p className="text-gray-600 flex items-center gap-2">
-                    <Mail className="w-4 h-4" />
-                    ignagonzalez2003@gmail.com
-                  </p>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      Miembro desde Enero 2023
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      24 trabajos completados
-                    </span>
-                  </div>
+                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
+                  <Camera className="h-4 w-4 text-white" />
                 </div>
+              </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <Button variant="outline" className="gap-2 bg-transparent">
-                    <MessageCircle className="w-4 h-4" />
-                    Contactar
-                  </Button>
-                  <Button className="gap-2 bg-emerald-600 hover:bg-emerald-700">
-                    <Edit3 className="w-4 h-4" />
-                    Editar Perfil
-                  </Button>
+              {/* User Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{mockUser.name}</h1>
+                      {mockUser.verified && (
+                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
+                          <CheckCircle className="h-3 w-3 mr-1" />
+                          Verificado
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 text-gray-600 text-sm mb-3">
+                      <div className="flex items-center gap-1">
+                        <Mail className="h-4 w-4" />
+                        {mockUser.email}
+                      </div>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-500">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-4 w-4" />
+                        Miembro desde {mockUser.joinDate}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Briefcase className="h-4 w-4" />
+                        {mockUser.completedJobs} trabajos completados
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button variant="outline" className="bg-white">
+                      <Mail className="h-4 w-4 mr-2" />
+                      Contactar
+                    </Button>
+                    <Button className="bg-emerald-600 hover:bg-emerald-700">
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar Perfil
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,276 +160,255 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="px-4 sm:px-6 lg:px-8 mt-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {userStats.map((stat, index) => (
-              <Card
-                key={index}
-                className="border-0 shadow-md hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm"
-              >
-                <CardContent className="p-6 text-center">
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-50 mb-3`}>
-                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
+      <div className="mx-auto px-4 sm:px-6 lg:px-16 -mt-12 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="text-center p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col items-center">
+              <CheckCircle className="h-8 w-8 text-emerald-600 mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.completedJobs}</div>
+              <div className="text-sm text-gray-600">Trabajos Completados</div>
+            </div>
+          </Card>
+          <Card className="text-center p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col items-center">
+              <Star className="h-8 w-8 text-yellow-500 mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.rating}</div>
+              <div className="text-sm text-gray-600">Calificación Promedio</div>
+            </div>
+          </Card>
+          <Card className="text-center p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col items-center">
+              <Heart className="h-8 w-8 text-red-500 mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.satisfiedClients}</div>
+              <div className="text-sm text-gray-600">Clientes Satisfechos</div>
+            </div>
+          </Card>
+          <Card className="text-center p-4 sm:p-6 shadow-sm">
+            <div className="flex flex-col items-center">
+              <Trophy className="h-8 w-8 text-blue-500 mb-3" />
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.yearsExperience}</div>
+              <div className="text-sm text-gray-600">Años de Experiencia</div>
+            </div>
+          </Card>
+        </div>
+      </div>
+
+      <div className=" mx-auto px-4 sm:px-6 lg:px-16">
+        <div className="flex flex-col sm:flex-row gap-2 mb-8">
+          <Button
+            onClick={() => setActiveTab("perfil")}
+            variant={activeTab === "perfil" ? "default" : "outline"}
+            className={activeTab === "perfil" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+          >
+            Perfil
+          </Button>
+          <Button
+            onClick={() => setActiveTab("resenas-recibidas")}
+            variant={activeTab === "resenas-recibidas" ? "default" : "outline"}
+            className={activeTab === "resenas-recibidas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+          >
+            Reseñas Recibidas
+          </Button>
+          <Button
+            onClick={() => setActiveTab("resenas-enviadas")}
+            variant={activeTab === "resenas-enviadas" ? "default" : "outline"}
+            className={activeTab === "resenas-enviadas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+          >
+            Reseñas Enviadas
+          </Button>
+        </div>
+
+        {activeTab === "perfil" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-8">
+            {/* Left Column */}
+            <div className="space-y-6">
+              {/* Personal Information */}
+              <Card className="shadow-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Users className="h-5 w-5 text-emerald-600" />
+                    Información Personal
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <MapPin className="h-4 w-4" />
+                        Ubicación
+                      </Label>
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-gray-500 italic">{mockUser.location}</span>
+                        <Button variant="link" className="text-emerald-600 p-0 h-auto">
+                          Agregar
+                        </Button>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Mail className="h-4 w-4" />
+                        Email de Contacto
+                      </Label>
+                      <div className="mt-1 p-3 bg-emerald-50 rounded-lg">
+                        <span className="text-gray-900">{mockUser.email}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Phone className="h-4 w-4" />
+                        Teléfono de Contacto
+                      </Label>
+                      <div className="mt-1 flex items-center justify-between">
+                        <span className="text-gray-500 italic">No especificado</span>
+                        <Button variant="link" className="text-emerald-600 p-0 h-auto">
+                          Agregar
+                        </Button>
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                        <Star className="h-4 w-4" />
+                        Calificación Promedio
+                      </Label>
+                      <div className="mt-1 p-3 bg-yellow-50 rounded-lg flex items-center gap-2">
+                        <div className="flex">
+                          {[1, 2, 3, 4].map((star) => (
+                            <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                          ))}
+                          <Star className="h-4 w-4 text-gray-300" />
+                        </div>
+                        <span className="font-medium">{mockUser.rating}</span>
+                        <span className="text-gray-500">({mockUser.reviewCount} reseñas)</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+                </CardContent>
+              </Card>
+
+              {/* Categories */}
+              <Card className="shadow-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Briefcase className="h-5 w-5 text-emerald-600" />
+                    Categorías Seleccionadas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {mockUser.categories.map((category, index) => (
+                      <div key={index} className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg">
+                        <CheckCircle className="h-4 w-4 text-emerald-600 flex-shrink-0" />
+                        <span className="text-sm text-gray-900">{category}</span>
+                      </div>
+                    ))}
+                    <div className="flex items-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-lg">
+                      <div className="h-4 w-4 border border-gray-300 rounded flex-shrink-0"></div>
+                      <span className="text-sm text-gray-500">Tecnología</span>
+                    </div>
+                    <div className="flex items-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-lg">
+                      <div className="h-4 w-4 border border-gray-300 rounded flex-shrink-0"></div>
+                      <span className="text-sm text-gray-500">Diseño Gráfico</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* Biography */}
+              <Card className="shadow-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Edit className="h-5 w-5 text-emerald-600" />
+                    Biografía
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-center py-8">
+                    <p className="text-gray-500 italic mb-4">{mockUser.bio}</p>
+                    <Button className="bg-emerald-600 hover:bg-emerald-700">Escribir Biografía</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Quick Actions */}
+              <Card className="shadow-sm">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Award className="h-5 w-5 text-emerald-600" />
+                    Acciones Rápidas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button variant="outline" className="w-full justify-start bg-white">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Editar Información
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start bg-white">
+                    <Camera className="h-4 w-4 mr-2" />
+                    Cambiar Foto
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start bg-white">
+                    <Award className="h-4 w-4 mr-2" />
+                    Ver Certificaciones
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "resenas-recibidas" && (
+          <div className="space-y-6 w-full pb-8">
+            {mockUser.reviews.map((review, index) => (
+              <Card key={index} className="shadow-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-medium text-emerald-600">{review.initials}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                        <div>
+                          <h4 className="font-medium text-gray-900">{review.client}</h4>
+                          <p className="text-sm text-gray-600">{review.service}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex">
+                            {[...Array(review.rating)].map((_, i) => (
+                              <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            ))}
+                            {[...Array(5 - review.rating)].map((_, i) => (
+                              <Star key={i} className="h-4 w-4 text-gray-300" />
+                            ))}
+                          </div>
+                          <span className="text-sm text-gray-500">{review.date}</span>
+                        </div>
+                      </div>
+                      <p className="text-gray-700">{review.comment}</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 lg:px-8 mt-8 pb-12">
-        <div className="max-w-6xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-            <TabsList className="grid w-full grid-cols-3 bg-white shadow-sm border border-gray-200 rounded-xl p-1">
-              <TabsTrigger
-                value="profile"
-                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg font-medium"
-              >
-                Perfil
-              </TabsTrigger>
-              <TabsTrigger
-                value="reviews-received"
-                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg font-medium"
-              >
-                Reseñas Recibidas
-              </TabsTrigger>
-              <TabsTrigger
-                value="reviews-sent"
-                className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-lg font-medium"
-              >
-                Reseñas Enviadas
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="profile" className="space-y-8">
-              <div className="grid lg:grid-cols-3 gap-8">
-                {/* Left Column */}
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Personal Information */}
-                  <Card className="shadow-md border-0 bg-white/80 backdrop-blur-sm">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="flex items-center gap-2 text-xl">
-                        <Users className="w-5 h-5 text-emerald-600" />
-                        Información Personal
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="grid sm:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-gray-500" />
-                            Ubicación
-                          </label>
-                          <div className="p-3 bg-gray-50 rounded-lg border">
-                            <span className="text-gray-500 italic">No especificado</span>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="ml-2 h-6 text-emerald-600 hover:text-emerald-700"
-                            >
-                              Agregar
-                            </Button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Mail className="w-4 h-4 text-gray-500" />
-                            Email de Contacto
-                          </label>
-                          <div className="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                            <span className="text-gray-900">ignagonzalez2003@gmail.com</span>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Phone className="w-4 h-4 text-gray-500" />
-                            Teléfono de Contacto
-                          </label>
-                          <div className="p-3 bg-gray-50 rounded-lg border">
-                            <span className="text-gray-500 italic">No especificado</span>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="ml-2 h-6 text-emerald-600 hover:text-emerald-700"
-                            >
-                              Agregar
-                            </Button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Star className="w-4 h-4 text-yellow-500" />
-                            Calificación Promedio
-                          </label>
-                          <div className="flex items-center gap-2 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                            <div className="flex items-center gap-1">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <Star
-                                  key={star}
-                                  className={`w-4 h-4 ${star <= 4 ? "text-yellow-400 fill-current" : "text-gray-300"}`}
-                                />
-                              ))}
-                            </div>
-                            <span className="font-semibold text-gray-900">4.8</span>
-                            <span className="text-sm text-gray-600">(24 reseñas)</span>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Categories */}
-                  <Card className="shadow-md border-0 bg-white/80 backdrop-blur-sm">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="flex items-center gap-2 text-xl">
-                        <Briefcase className="w-5 h-5 text-emerald-600" />
-                        Categorías Seleccionadas
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {categories.map((category, index) => (
-                          <div
-                            key={index}
-                            className={`flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 ${
-                              category.active
-                                ? "bg-emerald-50 border-emerald-200 text-emerald-900"
-                                : "bg-gray-50 border-gray-200 text-gray-500"
-                            }`}
-                          >
-                            <div
-                              className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                                category.active ? "bg-emerald-600 border-emerald-600" : "border-gray-300"
-                              }`}
-                            >
-                              {category.active && <CheckCircle2 className="w-3 h-3 text-white" />}
-                            </div>
-                            <span className="font-medium">{category.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Right Column */}
-                <div className="space-y-6">
-                  {/* Biography */}
-                  <Card className="shadow-md border-0 bg-white/80 backdrop-blur-sm">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="flex items-center gap-2 text-xl">
-                        <Edit3 className="w-5 h-5 text-emerald-600" />
-                        Biografía
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="p-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 text-center">
-                        <p className="text-gray-500 italic mb-3">
-                          El usuario no ha escrito una biografía por el momento
-                        </p>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="text-emerald-600 border-emerald-600 hover:bg-emerald-50 bg-transparent"
-                        >
-                          Escribir Biografía
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Quick Actions */}
-                  <Card className="shadow-md border-0 bg-gradient-to-br from-emerald-50 to-teal-50">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="flex items-center gap-2 text-xl">
-                        <TrendingUp className="w-5 h-5 text-emerald-600" />
-                        Acciones Rápidas
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <Button variant="outline" className="w-full justify-start gap-2 hover:bg-white bg-transparent">
-                        <Edit3 className="w-4 h-4" />
-                        Editar Información
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start gap-2 hover:bg-white bg-transparent">
-                        <Camera className="w-4 h-4" />
-                        Cambiar Foto
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start gap-2 hover:bg-white bg-transparent">
-                        <Award className="w-4 h-4" />
-                        Ver Certificaciones
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
+        {activeTab === "resenas-enviadas" && (
+          <div className="text-center py-16">
+            <div className="max-w-md mx-auto">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Star className="h-12 w-12 text-gray-400" />
               </div>
-            </TabsContent>
-
-            <TabsContent value="reviews-received" className="space-y-6">
-              <div className="grid gap-6">
-                {recentReviews.map((review) => (
-                  <Card
-                    key={review.id}
-                    className="shadow-md border-0 bg-white/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300"
-                  >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="w-12 h-12">
-                            <AvatarFallback className="bg-emerald-100 text-emerald-700">
-                              {review.client
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <h4 className="font-semibold text-gray-900">{review.client}</h4>
-                            <p className="text-sm text-gray-600">{review.project}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="flex items-center gap-1 mb-1">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <Star
-                                key={star}
-                                className={`w-4 h-4 ${star <= review.rating ? "text-yellow-400 fill-current" : "text-gray-300"}`}
-                              />
-                            ))}
-                          </div>
-                          <p className="text-sm text-gray-500">{new Date(review.date).toLocaleDateString("es-ES")}</p>
-                        </div>
-                      </div>
-                      <p className="text-gray-700 leading-relaxed">{review.comment}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="reviews-sent" className="space-y-6">
-              <Card className="shadow-md border-0 bg-white/80 backdrop-blur-sm">
-                <CardContent className="p-12 text-center">
-                  <MessageCircle className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No has enviado reseñas aún</h3>
-                  <p className="text-gray-600 mb-6">
-                    Cuando completes trabajos, podrás dejar reseñas sobre tu experiencia.
-                  </p>
-                  <Button className="bg-emerald-600 hover:bg-emerald-700">Explorar Trabajos</Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No has enviado reseñas aún</h3>
+              <p className="text-gray-600 mb-6">
+                Cuando completes trabajos, podrás dejar reseñas sobre tu experiencia.
+              </p>
+              <Button className="bg-emerald-600 hover:bg-emerald-700">Explorar Trabajos</Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
