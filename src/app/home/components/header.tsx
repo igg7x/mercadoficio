@@ -7,9 +7,9 @@ interface HeaderProps {
   onToggleSidebar: () => void
 }
 
-export function Header({ onToggleSidebar }: HeaderProps) {
+export function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-200 h-16">
+    <header className="fixed top-0 md:left-70 left-0 right-0 z-10 bg-white border-b border-gray-200 h-16">
       <div className="flex items-center justify-between h-full px-4">
         {/* Logo and Brand */}
     <div className="flex items-center space-x-2">

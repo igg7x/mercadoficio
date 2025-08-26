@@ -92,7 +92,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="bg-emerald-600 pt-8 pb-20 sm:px-6 lg:px-16">
+      <div className="bg-emerald-600 pt-8 pb-20 sm:px-6 lg:px-16 rounded-2xl">
         <div className="w-full mx-auto">
           <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">

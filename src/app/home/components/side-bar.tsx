@@ -1,103 +1,162 @@
-"use client"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Home, Search, Briefcase, Plus, User, Menu, X } from "lucide-react"
+import { Home, Search, Briefcase, Plus, User, Settings,Blocks,TableOfContents, Bell, Star, MapPin, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar"
+import Link from "next/link"
 
-const navigation = [
-  { name: "Inicio", href: "/home", icon: Home },
-  { name: "Buscar", href: "/home/search", icon: Search },
-  { name: "Trabajos", href: "/home/jobs", icon: Briefcase },
-  { name: "Publicar", href: "/home/post-jobs", icon: Plus },
-  { name: "Perfil", href: "/home/profile", icon: User },
+const items = [
+  {
+    title: "Inicio",
+    url: "/home",
+    icon: Home,
+  },
+  {
+    title: "Buscar",
+    url: "/home/search",
+    icon: Search,
+  },
+  {
+    title: "Trabajos",
+    url: "/home/jobs",
+    icon: Briefcase,
+    badge: "3",
+  },
+  {
+    title: "Publicar",
+    url: "/home/post-jobs",
+    icon: Plus,
+  },
+  {
+    title: "Perfil",
+    url: "/home/profile",
+    icon: User,
+  },
 ]
 
-interface SidebarProps {
-  isOpen: boolean
-  onToggle: () => void
-}
-
-export function Sidebar({ isOpen, onToggle }: SidebarProps) {
-  const pathname = usePathname()
-
+export function AppSidebar() {
   return (
-    <>
-      {/* Mobile menu button */}
-      <Button variant="ghost" size="sm" className="fixed top-4 left-4 z-50 lg:hidden" onClick={onToggle}>
-        {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-      </Button>
+    <Sidebar className="border-r border-gray-200/60 bg-white/95 backdrop-blur-sm">
+      <SidebarContent className="px-3 py-6">
 
-      {/* Overlay for mobile */}
-      {isOpen && <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden" onClick={onToggle} />}
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+            <TableOfContents className="w-4 h-4 mr-2" />
+            Navegación
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="space-y-1">
+              {items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className="group relative h-11 px-3 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 data-[state=open]:bg-emerald-50 data-[state=open]:text-emerald-700"
+                  >
+                    <a href={item.url} className="flex items-center gap-3">
+                      <item.icon className="w-5 h-5 transition-colors" />
+                      <span className="font-medium">{item.title}</span>
+                      {item.badge && (
+                        <Badge
+                          variant="secondary"
+                          className="ml-auto bg-emerald-100 text-emerald-700 hover:bg-emerald-100 text-xs px-2 py-0.5"
+                        >
+                          {item.badge}
+                        </Badge>
+                      )}
+                      <ChevronRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          "fixed left-0 top-0 z-40  max-h-screen bg-white border-r border-gray-200 transition-all duration-300 ease-in-out",
-          // Mobile: slide in from left
-          "lg:translate-x-0",
-          isOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0 lg:w-16",
-          // Desktop: always visible, width changes
-          "lg:relative lg:z-10",
-        )}
-      >
-        <div className="flex flex-col h-screen justify-between pt-16 lg:pt-0">
-          {/* Logo area for desktop collapsed state */}
-          {isOpen && <div className={cn("flex items-center px-4 py-3 border-b border-gray-100", !isOpen && "lg:justify-center")}>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                  <div className="w-4 h-4 bg-white rounded-sm"></div>
-                </div>
-                <h2 className="text-lg font-semibold text-gray-900">MercadOficio</h2>
-              </div>
-          </div>}
+        {/* Quick Actions */}
+        <SidebarGroup className="mt-8">
+          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+            <Blocks className="w-4 h-4 mr-2" />
+            Acciones Rápidas
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <div className="space-y-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start h-10 px-3 rounded-xl hover:bg-blue-50 hover:text-blue-700 transition-colors"
+              >
+                <Bell className="w-4 h-4 mr-3" />
+                <span className="font-medium">Notificaciones</span>
+                <Badge variant="destructive" className="ml-auto text-xs px-1.5 py-0.5">
+                  2
+                </Badge>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start h-10 px-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-colors"
+              >
+                <Settings className="w-4 h-4 mr-3" />
+                <span className="font-medium">Configuración</span>
+              </Button>
+            </div>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-3  ">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href
-              const Icon = item.icon
+      {/* User Profile Footer */}
+      <SidebarFooter className="p-4 border-t border-gray-200/60">
+        <div className="bg-gradient-to-r from-emerald-50 to-blue-50 rounded-2xl p-4 space-y-3">
+          {/* User Info */}
+          <div className="flex items-center gap-3">
+            <Avatar className="w-12 h-12 ring-2 ring-white shadow-sm">
+              <AvatarImage src="/professional-headshot-of-ignacio-gonzalez.png" alt="Ignacio Gonzalez" />
+              <AvatarFallback className="bg-emerald-500 text-white font-semibold">IG</AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-gray-900 truncate">Ignacio Gonzalez</p>
+              <p className="text-sm text-gray-600 truncate">Desarrollador Frontend</p>
+            </div>
+          </div>
 
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                    !isOpen && "lg:justify-center lg:px-2",
-                  )}
-                  onClick={() => {
-                    // Close sidebar on mobile after navigation
-                    if (window.innerWidth < 1024) {
-                      onToggle()
-                    }
-                  }}
-                >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
-                  <span className={cn("transition-opacity", !isOpen && "lg:hidden")}>{item.name}</span>
-                </Link>
-              )
-            })}
-          </nav>
+          {/* User Stats */}
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-1 text-amber-600">
+              <Star className="w-4 h-4 fill-current" />
+              <span className="font-medium">4.8</span>
+            </div>
+            <div className="flex items-center gap-1 text-gray-600">
+              <MapPin className="w-4 h-4" />
+              <span>Santiago, Chile</span>
+            </div>
+          </div>
 
-          {/* Toggle button for desktop */}
-          <div className="p-3 border-t border-gray-100 hidden mt-auto h-full lg:contents">
+          {/* Profile Actions */}
+          <div className="flex gap-2 pt-2">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              onClick={onToggle}
-              className={cn("w-full justify-start gap-3", !isOpen && "justify-center px-2")}
+              className="flex-1 h-8 text-xs bg-white/80 hover:bg-white border-gray-200 hover:border-emerald-300 hover:text-emerald-700 transition-colors"
+              asChild
             >
-              <Menu className="w-5 h-5" />
-              <span className={cn(!isOpen && "hidden")}>{isOpen ? "Contraer" : "Expandir"}</span>
+              <Link href="/home/profile">Ver Perfil</Link>
+            </Button>
+            <Button variant="ghost" size="sm" className="h-8 px-2 hover:bg-white/80 transition-colors">
+              <Settings className="w-4 h-4" />
             </Button>
           </div>
         </div>
-      </aside>
-    </>
+      </SidebarFooter>
+    </Sidebar>
   )
 }

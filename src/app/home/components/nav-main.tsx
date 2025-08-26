@@ -13,20 +13,21 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link";
-export function NavMain({
-  items,
-}: {
+
+
+interface NavMainProps {
   items: {
     title: string
     url: string
     icon?: LucideIcon
     isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
   }[]
-}) {
+}
+
+
+export function NavMain({
+  items,
+}: NavMainProps) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel className="text-lg flex items-center gap-1   font-semibold text-center">
@@ -41,26 +42,11 @@ export function NavMain({
                 <SidebarMenuButton tooltip={item.title}>
                   {item.icon && <item.icon />}
                     <span>{item.title}</span>
-                  {item.items && (
+                  {/* {item.items && (
                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  )}
+                  )} */}
                 </SidebarMenuButton>
               </CollapsibleTrigger>
-              {/* {item.items && (
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {item.items?.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
-                            <span>{subItem.title}</span>
-                          </a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
-              )} */}
             </SidebarMenuItem>
                     </Link>
           </Collapsible>

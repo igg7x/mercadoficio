@@ -45,12 +45,11 @@ export default function SearchPage() {
 
   return (
 
-
     
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white">
-      <main className="max-w-7xl mx-auto px-4  md:px-28 sm:px-28 lg:px-24 py-8">
+    <div className="min-h-screen ">
+      <main className="max-w-7xl mx-auto px-4  md:px-8 sm:px-16 lg:px-4 py-2">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200">
+      <div >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
           <div className="text-center space-y-3 lg:space-y-4">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 font-sans leading-tight">
