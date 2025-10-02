@@ -1,10 +1,17 @@
-import React from 'react'
+import React  from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { User, Search, Star, Bell, ArrowRight, Briefcase, TrendingUp } from "lucide-react"
+import { User, Search, Star, Bell, ArrowRight, TrendingUp } from "lucide-react"
+import Notifications from './components/notifications'
+import { Suspense } from 'react'
+import { auth0 } from '@/lib/auth0' 
 
-const HomePage = ({children} : {children : React.ReactNode}) => {
+export default auth0.withPageAuthRequired(
+async function HomePage (){
+
+  const session = await auth0.getSession();
+
   return (
  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Main Content */}
@@ -14,7 +21,7 @@ const HomePage = ({children} : {children : React.ReactNode}) => {
           <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
           <div className="relative z-10">
             <h1 className="text-3xl font-bold mb-2">
-              ¡Bienvenido a MercadOficio, <span className="text-emerald-100">Ignacio</span>!
+              ¡Bienvenido a MercadOficio, <span className="text-emerald-100">{session?.user?.name}</span>!
             </h1>
             <p className="text-emerald-50 text-lg font-medium">
               Gestiona tu perfil profesional y encuentra nuevas oportunidades
@@ -115,18 +122,12 @@ const HomePage = ({children} : {children : React.ReactNode}) => {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Bell className="w-8 h-8 text-slate-400" />
-              </div>
-              <p className="text-slate-500 font-medium">No hay notificaciones por el momento</p>
-              <p className="text-slate-400 text-sm mt-1">Te notificaremos cuando tengas nuevas actualizaciones</p>
-            </div>
+            <Suspense fallback={<div>Cargando notificaciones...</div>}>
+              <Notifications />
+            </Suspense>
           </CardContent>
         </Card>
       </main>
     </div>
   )
-}
-
-export default HomePage
+} ) ; 

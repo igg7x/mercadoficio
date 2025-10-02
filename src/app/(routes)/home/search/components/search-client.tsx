@@ -8,7 +8,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { Search, MapPin, Star, Filter, Users, Loader2 } from "lucide-react"
 
-export default function SearchPage() {
+import { auth0 } from "@/lib/auth0"
+
+
+export default  function SearchPage() {
   const [isSearching, setIsSearching] = useState(false)
   const [searchResults, setSearchResults] = useState<any[]>([])
   const [filters, setFilters] = useState({
@@ -219,4 +222,4 @@ export default function SearchPage() {
     </main>
     </div>
   )
-}
+} ;

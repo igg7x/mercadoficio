@@ -1,20 +1,13 @@
 "use client"
-
 import type React from "react"
-
-import { useState } from "react"
 import { Header } from "./components/header"
-import { cn } from "@/lib/utils"
-
 interface AppLayoutProps {
   children: React.ReactNode
 } 
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { NavMain } from "./components/nav-main"
-import { SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "./components/side-bar"
-export  default function AppLayout({ children }: AppLayoutProps) {
 
+export  default function AppLayout({ children }: AppLayoutProps) {
 
 
 

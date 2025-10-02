@@ -1,4 +1,4 @@
-import { Home, Search, Briefcase, Plus, User, Settings,Blocks,TableOfContents, Bell, Star, MapPin, ChevronRight } from "lucide-react"
+import { Home, Search, Briefcase, Plus, User, Settings,Blocks,TableOfContents, Bell, Star, MapPin, ChevronRight, LogOutIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -14,7 +14,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-
 const items = [
   {
     title: "Inicio",
@@ -43,8 +42,9 @@ const items = [
     icon: User,
   },
 ]
+export   function AppSidebar() {
 
-export function AppSidebar() {
+
   return (
     <Sidebar className="border-r border-gray-200/60 bg-white/95 backdrop-blur-sm">
       <SidebarContent className="px-3 py-6">
@@ -109,6 +109,16 @@ export function AppSidebar() {
                 <Settings className="w-4 h-4 mr-3" />
                 <span className="font-medium">Configuración</span>
               </Button>
+              <Link href={"/auth/logout?federated&returnTo=http://localhost:3000"} className="w-full">
+                 <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start h-10 px-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-colors"
+              >
+                <LogOutIcon className="w-4 h-4 mr-3" />
+                <span className="font-medium">Salir </span>
+              </Button>
+                </Link>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

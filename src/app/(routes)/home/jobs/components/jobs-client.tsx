@@ -22,8 +22,11 @@ import {
   Heart,
   BookmarkPlus,
 } from "lucide-react"
+import { auth0 } from "@/lib/auth0"
 
-export default function EmpleosPortal() {
+
+
+export default  function EmpleosPortal() {
   const [activeTab, setActiveTab] = useState("active")
   const [searchQuery, setSearchQuery] = useState("")
   const [filters, setFilters] = useState({
@@ -317,4 +320,4 @@ export default function EmpleosPortal() {
       </main>
     </div>
   )
-}
+} ;

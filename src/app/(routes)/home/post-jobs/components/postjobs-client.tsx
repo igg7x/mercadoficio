@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus, Briefcase, Clock, History, Users, TrendingUp, ArrowRight } from "lucide-react"
 
-export default function JobsPortal() {
+const JobsPortal = () => {
   const [activeTab, setActiveTab] = useState("active")
 
   return (
@@ -196,4 +196,7 @@ export default function JobsPortal() {
       </main>
     </div>
   )
-}
+};
+
+
+export default JobsPortal;

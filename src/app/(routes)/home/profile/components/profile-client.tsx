@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
-
+import {  UserSession } from "@/lib/api/types"
 const mockUser = {
   name: "Ignacio Gonzalez",
   email: "ignagonzalez2003@gmail.com",
@@ -62,8 +62,9 @@ const mockUser = {
     },
   ],
 }
+import Image from "next/image"
+const ProfilePage = ( { user } :{ user: UserSession  }) => {
 
-export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false)
   const [activeTab, setActiveTab] = useState("perfil")
   const [editData, setEditData] = useState({
@@ -99,12 +100,7 @@ export default function ProfilePage() {
               {/* Profile Image */}
               <div className="relative flex-shrink-0">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center border-4 border-emerald-100">
-                  <span className="text-xl sm:text-2xl font-bold text-emerald-600">
-                    {mockUser.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </span>
+                    <img src={user.picture} alt={user.name} className="w-full h-full object-cover rounded-full" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                   <Camera className="h-4 w-4 text-white" />
@@ -117,7 +113,7 @@ export default function ProfilePage() {
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{mockUser.name}</h1>
-                      {mockUser.verified && (
+                      {user.email_verified && (
                         <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Verificado
@@ -127,7 +123,7 @@ export default function ProfilePage() {
                     <div className="flex items-center gap-4 text-gray-600 text-sm mb-3">
                       <div className="flex items-center gap-1">
                         <Mail className="h-4 w-4" />
-                        {mockUser.email}
+                        {user.email}
                       </div>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-500">
@@ -413,3 +409,5 @@ export default function ProfilePage() {
     </div>
   )
 }
+
+export default ProfilePage;

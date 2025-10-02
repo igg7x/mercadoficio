@@ -3,7 +3,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star, ArrowRight, Briefcase, Home, Wrench } from "lucide-react"
+import Link from "next/link";
 export default function LandingPage() {
+
   return ( 
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
@@ -28,9 +30,11 @@ export default function LandingPage() {
             <Button variant="outline" size="sm">
               Clientes
             </Button>
-            <Button size="sm" className="bg-primary hover:bg-primary/90">
-              Ingresar
-            </Button>
+            <Link href="/register">
+              <Button size="sm" className="bg-primary hover:bg-primary/90">
+                Ingresar
+              </Button>
+            </Link>
           </nav>
         </div>
       </header>
