@@ -1,13 +1,11 @@
 // app/profile/page.tsx
 import { auth0 } from "@/lib/auth0";
 import ProfilePage from "./components/profile-client";
-import { UserSession } from "@/types/user";
-
+import { UserSession } from  "@/lib/api/types";
 
 export default auth0.withPageAuthRequired( async function ProfilePageServer() {
   const session = await auth0.getSession();
   const user = session?.user;
-  console.log("User in Profile Page Server: ", user);
   if (!user) {
     throw new Error("User not found in session.");
   }

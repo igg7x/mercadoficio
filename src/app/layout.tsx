@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Work_Sans, Open_Sans } from "next/font/google"
 import { inter } from "./ui/fonts";
-import AppLayout from "./(routes)/home/layout";
-const workSans = Work_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-work-sans",
-})
+// import { Work_Sans, Open_Sans } from "next/font/google"
+// const workSans = Work_Sans({
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-work-sans",
+// })
 
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-open-sans",
-})
+// const openSans = Open_Sans({
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-open-sans",
+// })
+
+import ReactQueryProvider from "./providers/react-query-provider";
 
 export const metadata: Metadata = {
   title: "MercadOficio",
@@ -28,15 +29,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      className={`${
-        inter.className
-      } antialiased`} 
-    //  className={`${workSans.variable} ${openSans.variable} antialiased`}
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
+        <ReactQueryProvider>
         {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );
 }
+
+//  className={`${workSans.variable} ${openSans.variable} antialiased`}
+// className={`${geistSans.variable} ${geistMono.variable} antialiased`}

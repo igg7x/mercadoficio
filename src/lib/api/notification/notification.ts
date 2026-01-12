@@ -1,7 +1,7 @@
 import { HTTP } from "@/lib/utils";
 import { apiRequest } from "../request";
-
-export const getNotificationsByUserEmail = (pageParam  : number = 0 ) => {
+import { Notification } from "../types";
+export const getNotificationsByUserEmail = (pageParam  : number = 0 ): Promise<Notification[]> => {
   return apiRequest({
     method: HTTP.GET,
     path: `/notifications/get?page=${pageParam}&size=10`,

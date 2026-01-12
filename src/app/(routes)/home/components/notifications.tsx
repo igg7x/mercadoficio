@@ -1,16 +1,15 @@
+"use client"
 import React from 'react'
 import { Notification } from '@/lib/api/types';
-import { getNotificationsByUserEmail } from '@/lib/api/notification/notification';
 import NotificationCard from './notification-card';
 import { Bell } from 'lucide-react';
-
-const Notifications = async  () => {
- const notifications  = await getNotificationsByUserEmail() as Array<Notification>;
- console.log("Notifications: ", notifications);
+import {use } from 'react';
+const Notifications =   ({notifications} : {notifications: Promise<Notification[]>}) => {
+  const allNotifications = use(notifications);
   return (
     <div>
       <ul>
-        {notifications.length > 0 ? notifications.map((notification :Notification) => (
+        {allNotifications.length > 0 ? allNotifications.map((notification :Notification) => (
           <li key={notification.id}>
             <NotificationCard notification={notification} />
           </li>

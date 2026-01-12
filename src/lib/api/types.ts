@@ -18,6 +18,15 @@ export type Job =
     deadline_date : Date,
     description : string,
     category : string,
+    status : boolean,
+    publish_date : Date,
+    jobId : number,
+    applicants : number
+}
+export type  JobStats = {
+    totalJobs: number;
+    activeJobs: number;
+    completedJobs: number;
 }
 
 
@@ -27,7 +36,6 @@ export type JobUpdate = {
     userOfferingEmail : string , 
     deadlineDate : Date , 
     description : string 
-
 }
 
 export type UserSession = {
@@ -87,6 +95,25 @@ export type Category  = {
     name : string 
 } 
 
+export type CategoryUpdate = {
+    name : string , 
+    status : boolean 
+}
+
 export type UserOffering ={
     userCategories : Array<Category>
 }
+
+export type JobApplication = {
+    userOfferingEmail : string 
+    applyDate : Date 
+}
+ export interface Page<T> {
+  content: T[];
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  number: number;
+  size: number;
+}
+

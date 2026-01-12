@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardContent } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { Ban, Calendar, Check, CheckCheck, Info, MoreHorizontal, SquareArrowOutUpRight, Trash, TriangleAlert } from 'lucide-react';

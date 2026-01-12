@@ -13,10 +13,11 @@ export async function apiRequest<TResponse, TBody = unknown>({path, method, body
 
   try {
     const authToken  = (await auth0.getAccessToken()).token;
+    console.log(authToken)
     // ⚠️ OJO: localStorage solo en cliente
     // const authToken =
     //   token || (typeof window !== "undefined" ? localStorage.getItem("authToken") : null);
-      const response = await fetch(`${process.env.BACKEND_API_URL}${path}`, {
+    const response = await fetch(`${process.env.BACKEND_API_URL}${path}`, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +26,7 @@ export async function apiRequest<TResponse, TBody = unknown>({path, method, body
       body: body ? JSON.stringify(body) : undefined,
       cache: "no-store", // si quieres evitar cache SSR
     });
-
+    console.log(response)
     if (!response.ok) {
       let errorResponse: any;
       try {
@@ -38,7 +39,7 @@ export async function apiRequest<TResponse, TBody = unknown>({path, method, body
 
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
-      return (await response.json()) as TResponse;
+        return (await response.json()) as TResponse;
     }
     return null as TResponse;
   } catch (error: any) {

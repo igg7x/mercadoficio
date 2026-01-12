@@ -62,7 +62,6 @@ const mockUser = {
     },
   ],
 }
-import Image from "next/image"
 const ProfilePage = ( { user } :{ user: UserSession  }) => {
 
   const [isEditing, setIsEditing] = useState(false)

@@ -6,11 +6,14 @@ import { User, Search, Star, Bell, ArrowRight, TrendingUp } from "lucide-react"
 import Notifications from './components/notifications'
 import { Suspense } from 'react'
 import { auth0 } from '@/lib/auth0' 
+import { getNotificationsByUserEmail } from '@/lib/api/notification/notification'
+import { Notification } from '@/lib/api/types'
 
-export default auth0.withPageAuthRequired(
-async function HomePage (){
-
+export default auth0.withPageAuthRequired(async function HomePage (){
+  const notifications : Promise<Notification[]> = getNotificationsByUserEmail();
   const session = await auth0.getSession();
+
+
 
   return (
  <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -123,7 +126,7 @@ async function HomePage (){
           </CardHeader>
           <CardContent>
             <Suspense fallback={<div>Cargando notificaciones...</div>}>
-              <Notifications />
+              <Notifications  notifications={notifications}/>
             </Suspense>
           </CardContent>
         </Card>

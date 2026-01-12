@@ -1,8 +1,8 @@
 import { apiRequest } from "../request";
 import { HTTP } from "@/lib/utils";
-import { Job  ,JobUpdate} from "../types";
+import { Page , Job  ,JobUpdate ,JobStats, JobApplication} from "../types";
 
-export const getJobsByUserCustomer = async (pageParam  : number)  => 
+export const getJobsByUserCustomer = async (pageParam  : number = 0) : Promise<Page<Job>> => 
 {
     return apiRequest({
         path: `/jobs/customer?page=${pageParam}&size=7`,
@@ -11,29 +11,37 @@ export const getJobsByUserCustomer = async (pageParam  : number)  =>
 }
 
 
-export const getJobsByCategories = async (pageParam :number) => {
+export const getJobsByCategories = async (pageParam :number = 0) : Promise<Page<Job>> => {
   return apiRequest({
     method: HTTP.GET,
     path: `/jobs/all?page=${pageParam}&size=7`,
   });
 };
 
-export const getHistorialJobsByUserCustomer = async (pageParam : number) => {
+export const getJobsStatsByUserCustomer = async () : Promise<JobStats> => {
+  return apiRequest({
+    method: HTTP.GET,
+    path: `/jobs/customer/stats`,
+  });
+};
+
+
+
+export const getJobsHistorialByUserCustomer = async (pageParam : number = 0) : Promise<Page<Job>> => {
   return apiRequest( {
     method: HTTP.GET,
     path: `/jobs/customer/historial?page=${pageParam}&size=7`,
   });
 };
 
-export const getHistorialForUserOffering = async (pageParam : number ) => {
+export const getHistorialForUserOffering = async (pageParam : number ) : Promise<Page<Job>> => {
   return apiRequest({
     method: HTTP.GET,
     path: `/jobs/offerings/historial?page=${pageParam}&size=8`,
   });
 };
 
-export const createJob = async (job : Job ) => {
-  
+export const createJob = async (job : Job ):Promise<Job> => {
   return apiRequest({
     method: HTTP.POST,
     path: `/jobs/create`,
@@ -41,7 +49,7 @@ export const createJob = async (job : Job ) => {
   });
 };
 
-export const updateJob = async (jobUpdate:JobUpdate) => {
+export const updateJob = async (jobUpdate:JobUpdate) : Promise<Job> => {
   const jobToUpdate = Object.fromEntries(
     Object.entries({
       userOfferingEmail: jobUpdate.userOfferingEmail,
@@ -60,16 +68,25 @@ export const updateJob = async (jobUpdate:JobUpdate) => {
   });
 };
 
-export const getJobById = async (jobId :number ) => {
+export const getJobById = async (jobId :string):Promise<Job> => {
   return apiRequest({
     method: HTTP.GET,
     path: `/jobs/get/${jobId}`,
   }) ;
 };
 
-export const deleteJob = async (jobId :number) => {
+export const deleteJob = async (jobId :number) : Promise<void> => {
   return apiRequest({
     method: HTTP.PUT,
     path: `/jobs/delete/${jobId}`,
+  });
+};
+
+
+
+export const getApplicantsByJobId = async (jobId : string , pageParam : number = 0) : Promise<Page<JobApplication>> => {
+  return apiRequest({
+    method: HTTP.GET,
+    path: `/applications/job/${jobId}?page=${pageParam}&size=7`,
   });
 };
