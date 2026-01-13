@@ -80,7 +80,7 @@ const JobDetails = ({job , applications }:{job:Job, applications : Page<JobAppli
                 <div className="space-y-4">
                   <h3 className="font-semibold">Aplicaciones:</h3>
                   {applications?.content?.length !== 0 ? (
-                    <ApplicantsTable applications={applications} jobId={job.id} />
+                    <ApplicantsTable data={applications.content} jobId={job.jobId} />
                   ) : (
                     <div className="w-full flex p-3  items-center  justify-center flex-col gap-1">
                       <p className=" text-xl max-[640px]:text-2xl ">

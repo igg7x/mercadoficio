@@ -12,6 +12,7 @@ export type Notification = {
 
 export type Job = 
 {
+    jobId : string,
     userCustomerEmail: string,
     title : string ,
     location :string ,
@@ -20,7 +21,6 @@ export type Job =
     category : string,
     status : boolean,
     publish_date : Date,
-    jobId : number,
     applicants : number
 }
 export type  JobStats = {
@@ -110,10 +110,11 @@ export type JobApplication = {
 }
  export interface Page<T> {
   content: T[];
-  last: boolean;
-  totalPages: number;
-  totalElements: number;
   number: number;
   size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  first : boolean ;
 }
 

@@ -4,8 +4,8 @@ import { Clock, History, Plus, ArrowRight } from "lucide-react"
 import { Button } from '@/components/ui/button'
 import { Job } from '@/lib/api/types'
 import { Page } from '@/lib/api/types'
-
-
+import JobsList from './jobs-list'
+import { Suspense } from 'react'
 const JobsTabs = ({pageActiveJobs , pageHistorialJobs, onCreateClick} : {pageActiveJobs :Page<Job>, pageHistorialJobs: Page<Job>, onCreateClick : () => void}) => {
   return (
       <Tabs defaultValue="active" className="w-full">
@@ -27,7 +27,11 @@ const JobsTabs = ({pageActiveJobs , pageHistorialJobs, onCreateClick} : {pageAct
               </TabsList>
 
               <TabsContent value="active" className="mt-6">
-                {/* Empty State for Active Jobs */}
+               {pageActiveJobs.content.length > 0 ? (
+                <Suspense fallback={<div>Cargando trabajos...</div>}>
+                  <JobsList pageActiveJobs={pageActiveJobs} />
+                </Suspense>
+               ) : (  
                 <div className="text-center py-16">
                   <div className="relative mb-8">
                     <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center mx-auto shadow-lg">
@@ -54,11 +58,15 @@ const JobsTabs = ({pageActiveJobs , pageHistorialJobs, onCreateClick} : {pageAct
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                     </Button>
                   </div>
-                </div>
+                </div>)
+              }
               </TabsContent>
-
               <TabsContent value="history" className="mt-6">
-                {/* Empty State for Job History */}
+                {pageHistorialJobs.content.length > 0 ? (
+                  <Suspense fallback={<div>Cargando trabajos...</div>}>
+                    <JobsList pageHistorialJobs={pageHistorialJobs} />
+                  </Suspense>
+                ) : (
                 <div className="text-center py-16">
                   <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <History className="w-10 h-10 text-slate-400" />
@@ -67,7 +75,7 @@ const JobsTabs = ({pageActiveJobs , pageHistorialJobs, onCreateClick} : {pageAct
                   <p className="text-slate-600 max-w-md mx-auto">
                     Una vez que completes tus primeros trabajos, aparecerán aquí para que puedas revisarlos
                   </p>
-                </div>
+                </div>)}
               </TabsContent>
             </Tabs>
   )

@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { Job } from '@/lib/api/types'
-import { Badge, Calendar, Edit, Eye, Link, MapPin, MoreVertical, TagIcon, Trash2 } from 'lucide-react'
+import { Calendar, Edit, Eye, Link, MapPin, MoreVertical, TagIcon, Trash2 } from 'lucide-react'
 import React from 'react'
 
 const JobCard = ({job}:{job:Job}) => {
@@ -36,14 +37,14 @@ const JobCard = ({job}:{job:Job}) => {
               </div>
             </div>
           </div>
-          {showActions && (
+          {/* {showActions && (
             <Button
               variant="ghost"
               size="sm"
               className="opacity-0 group-hover:opacity-100 transition-opacity">
               <MoreVertical className="h-4 w-4" />
             </Button>
-          )}
+          )} */}
         </div>
       </CardHeader>
       <CardContent className="pt-0">
@@ -58,7 +59,7 @@ const JobCard = ({job}:{job:Job}) => {
               {new Date(job.publish_date).toLocaleDateString("es-ES")}
             </span>
           </div>
-          <div className="flex gap-2 pt-2">
+          {/* <div className="flex gap-2 pt-2">
             {typeOfDetails === typesOfDetails.application ? (
               <Link
                 to={`details/${job.jobId}`}
@@ -92,16 +93,16 @@ const JobCard = ({job}:{job:Job}) => {
                 </Button>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </CardContent>
-      <ModalJobInfo
+      {/* <ModalJobInfo
         job={job}
         refreshJobs={refreshJobs}
         show={showJobDetails}
         toogle={toogleJobDetails}
         canApply={canApply}
-      />
+      /> */}
     </Card>
   )
 }

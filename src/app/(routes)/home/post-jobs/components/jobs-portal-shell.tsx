@@ -10,12 +10,11 @@ import StatsCards from './stats-cards'
 import JobsTabs from './jobs-tabs'
 import CreateJobDialog from './create-job-dialog'
 import { Page } from '@/lib/api/types'
-
+import { useModal } from '@/hooks/use-modal'
 const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories} 
 : {pageActiveJobs : Page<Job> , pageHistorialJobs : Page<Job> , stats : JobStats , categories : Category[]}
 ) => {
-
-    const [dialogOpen, setDialogOpen] = useState(false)
+  const { show : dialogOpen, toogle: setDialogOpen } = useModal()
   return    (
    <>
        <div className="min-h-screen ">
@@ -33,7 +32,7 @@ const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories
             <Button
               size="lg"
               className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 group"
-              onClick={() => setDialogOpen(true)}
+              onClick={setDialogOpen}
             >
               <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-200" />
               Añadir Nuevo Trabajo
@@ -47,7 +46,7 @@ const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories
         {/* Jobs Tabs */}
         <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
           <CardHeader className="pb-0">
-            <JobsTabs  pageActiveJobs={pageActiveJobs} pageHistorialJobs={pageHistorialJobs} onCreateClick={() => setDialogOpen(true)} />
+            <JobsTabs  pageActiveJobs={pageActiveJobs} pageHistorialJobs={pageHistorialJobs} onCreateClick={setDialogOpen} />
           </CardHeader>
         </Card>
         <CreateJobDialog open={dialogOpen} onOpenChange={setDialogOpen} categories={categories}/>

@@ -37,6 +37,7 @@ import { Button } from "@/components/ui/button";
 import { FilePenIcon, InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { useModal } from "@/hooks/use-modal";
+import { JobApplication } from "@/lib/api/types";
 /* =======================
    Types
 ======================= */
@@ -47,11 +48,11 @@ interface Applicant {
 }
 
 interface ApplicantsTableProps {
-  data: Applicant[];
-  JOB_ID: string;
+  data: JobApplication[];
+  jobId: string;
   job_status: boolean;
   updateJob: (payload: {
-    JOB_ID: string;
+    jobId: string;
     userOfferingEmail: string;
   }) => void;
 }
@@ -62,7 +63,7 @@ interface ApplicantsTableProps {
 
 const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
   data,
-  JOB_ID,
+  jobId,
   updateJob,
   job_status,
 }) => {
@@ -149,7 +150,7 @@ const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
     e.preventDefault();
 
     updateJob({
-      JOB_ID,
+      jobId,
       userOfferingEmail: selectedApplicant,
     });
 

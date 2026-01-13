@@ -1,46 +1,78 @@
-"use client ";
+"use client";
 
-import { ChevronLeftIcon , ChevronRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationProps {
-    prevPage: () => void;
-    nextPage: () => void;
-    page: number;
-    isPreviousData : boolean ;
-    isDataLast : boolean | undefined ;
-    isDataExists : boolean | undefined ;
+  currentPage: number;
+  isLastPage: boolean;
+  isFirstPage: boolean;
+  totalPages?: number;
+  pageType: "active" | "history"; // ✅ Nuevo: identificar qué paginación es
 }
 
 const Pagination = ({
-  prevPage,
-  nextPage,
-  page,
-  isPreviousData ,
-  isDataLast,
-  isDataExists,
-} : PaginationProps) => {
+  currentPage,
+  isLastPage,
+  isFirstPage,
+  totalPages,
+  pageType,
+}: PaginationProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    // ✅ Usar el parámetro correcto según el tipo
+    const paramName = pageType === "active" ? "activePage" : "historyPage";
+    params.set(paramName, newPage.toString());
+    
+    router.push(`?${params.toString()}`);
+  };
+
+  const prevPage = () => {
+    if (!isFirstPage) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  const nextPage = () => {
+    if (!isLastPage) {
+      handlePageChange(currentPage + 1);
+    }
+  };
+
   return (
     <div className="flex gap-2 max-[640px]:text-sm p-4 items-center">
       <button
-        className={`bg-gray-200  ${
-          page === 0 || isDataExists ? "text-gray-400" : ""
-        } flex gap-1 items-center justify-start  p-1 rounded-md`}
+        className={`bg-gray-200 flex gap-1 items-center justify-start p-1 rounded-md ${
+          isFirstPage ? "text-gray-400 cursor-not-allowed" : "hover:bg-gray-300"
+        }`}
         onClick={prevPage}
-        disabled={page === 0 || isDataExists}>
+        disabled={isFirstPage}
+      >
         <ChevronLeftIcon />
         Anterior
-      </button>{" "}
-      <div> Pagina: {page + 1}</div>
+      </button>
+
+      <div className="px-2">
+        Página: {currentPage + 1}
+        {totalPages && ` de ${totalPages}`}
+      </div>
+
       <button
-        className={`bg-gray-200 flex ${
-          isPreviousData || isDataLast || isDataExists ? "text-gray-400" : ""
-        } gap-1 items-center justify-start p-1 rounded-md`}
+        className={`bg-gray-200 flex gap-1 items-center justify-start p-1 rounded-md ${
+          isLastPage ? "text-gray-400 cursor-not-allowed" : "hover:bg-gray-300"
+        }`}
         onClick={nextPage}
-        disabled={isPreviousData || isDataLast || isDataExists}>
+        disabled={isLastPage}
+      >
         Siguiente
         <ChevronRightIcon />
       </button>
     </div>
   );
 };
+
 export default Pagination;
