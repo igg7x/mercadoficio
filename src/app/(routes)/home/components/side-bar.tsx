@@ -46,11 +46,11 @@ export   function AppSidebar() {
 
 
   return (
-    <Sidebar className="border-r border-gray-200/60 bg-white/95 backdrop-blur-sm">
+    <Sidebar collapsible="icon" className="border-r border-gray-200/60 bg-white/95 backdrop-blur-sm">
       <SidebarContent className="px-3 py-6">
 
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3 group-data-[collapsible=icon]:hidden">
             <TableOfContents className="w-4 h-4 mr-2" />
             Navegación
           </SidebarGroupLabel>
@@ -64,16 +64,16 @@ export   function AppSidebar() {
                   >
                     <a href={item.url} className="flex items-center gap-3">
                       <item.icon className="w-5 h-5 transition-colors" />
-                      <span className="font-medium">{item.title}</span>
+                      <span className="font-medium group-data-[collapsible=icon]:hidden">{item.title}</span>
                       {item.badge && (
                         <Badge
                           variant="secondary"
-                          className="ml-auto bg-emerald-100 text-emerald-700 hover:bg-emerald-100 text-xs px-2 py-0.5"
+                          className="ml-auto bg-emerald-100 text-emerald-700 hover:bg-emerald-100 text-xs px-2 py-0.5 group-data-[collapsible=icon]:hidden"
                         >
                           {item.badge}
                         </Badge>
                       )}
-                      <ChevronRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ChevronRight className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity group-data-[collapsible=icon]:hidden" />
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -84,7 +84,7 @@ export   function AppSidebar() {
 
         {/* Quick Actions */}
         <SidebarGroup className="mt-8">
-          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3">
+          <SidebarGroupLabel className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-3 group-data-[collapsible=icon]:hidden">
             <Blocks className="w-4 h-4 mr-2" />
             Acciones Rápidas
           </SidebarGroupLabel>
@@ -96,8 +96,8 @@ export   function AppSidebar() {
                 className="w-full justify-start h-10 px-3 rounded-xl hover:bg-blue-50 hover:text-blue-700 transition-colors"
               >
                 <Bell className="w-4 h-4 mr-3" />
-                <span className="font-medium">Notificaciones</span>
-                <Badge variant="destructive" className="ml-auto text-xs px-1.5 py-0.5">
+                <span className="font-medium group-data-[collapsible=icon]:hidden">Notificaciones</span>
+                <Badge variant="destructive" className="ml-auto text-xs px-1.5 py-0.5 group-data-[collapsible=icon]:hidden">
                   2
                 </Badge>
               </Button>
@@ -107,7 +107,7 @@ export   function AppSidebar() {
                 className="w-full justify-start h-10 px-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-colors"
               >
                 <Settings className="w-4 h-4 mr-3" />
-                <span className="font-medium">Configuración</span>
+                <span className="font-medium group-data-[collapsible=icon]:hidden">Configuración</span>
               </Button>
               <Link href={"/auth/logout?federated&returnTo=http://localhost:3000"} className="w-full">
                  <Button
@@ -116,7 +116,7 @@ export   function AppSidebar() {
                 className="w-full justify-start h-10 px-3 rounded-xl hover:bg-purple-50 hover:text-purple-700 transition-colors"
               >
                 <LogOutIcon className="w-4 h-4 mr-3" />
-                <span className="font-medium">Salir </span>
+                <span className="font-medium group-data-[collapsible=icon]:hidden">Salir </span>
               </Button>
                 </Link>
             </div>
@@ -133,14 +133,14 @@ export   function AppSidebar() {
               <AvatarImage src="/professional-headshot-of-ignacio-gonzalez.png" alt="Ignacio Gonzalez" />
               <AvatarFallback className="bg-emerald-500 text-white font-semibold">IG</AvatarFallback>
             </Avatar>
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
               <p className="font-semibold text-gray-900 truncate">Ignacio Gonzalez</p>
               <p className="text-sm text-gray-600 truncate">Desarrollador Frontend</p>
             </div>
           </div>
 
           {/* User Stats */}
-          <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center justify-between text-sm group-data-[collapsible=icon]:hidden">
             <div className="flex items-center gap-1 text-amber-600">
               <Star className="w-4 h-4 fill-current" />
               <span className="font-medium">4.8</span>
@@ -152,7 +152,7 @@ export   function AppSidebar() {
           </div>
 
           {/* Profile Actions */}
-          <div className="flex gap-2 pt-2">
+          <div className="flex gap-2 pt-2 group-data-[collapsible=icon]:hidden">
             <Button
               variant="outline"
               size="sm"

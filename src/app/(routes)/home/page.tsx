@@ -16,35 +16,33 @@ export default auth0.withPageAuthRequired(async function HomePage (){
 
 
   return (
- <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4 py-4">
-        {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
-          <div className="relative z-10">
-            <h1 className="text-3xl font-bold mb-2">
-              ¡Bienvenido a MercadOficio, <span className="text-emerald-100">{session?.user?.name}</span>!
-            </h1>
-            <p className="text-emerald-50 text-lg font-medium">
-              Gestiona tu perfil profesional y encuentra nuevas oportunidades
-            </p>
-          </div>
-          <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-white/10 rounded-full"></div>
-          <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/5 rounded-full"></div>
+    <div className="space-y-6">
+      {/* Welcome Section */}
+      <div className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 rounded-2xl p-8 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10 rounded-2xl"></div>
+        <div className="relative z-10">
+          <h1 className="text-3xl font-bold mb-2">
+            ¡Bienvenido a MercadOficio, <span className="text-emerald-100">{session?.user?.name}</span>!
+          </h1>
+          <p className="text-emerald-50 text-lg font-medium">
+            Gestiona tu perfil profesional y encuentra nuevas oportunidades
+          </p>
+        </div>
+        <div className="absolute -right-4 -bottom-4 w-32 h-32 bg-white/10 rounded-full"></div>
+        <div className="absolute -right-8 -top-8 w-24 h-24 bg-white/5 rounded-full"></div>
+      </div>
+
+      {/* Recommendations Section */}
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-slate-900">Recomendaciones para ti</h2>
+          <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+            <TrendingUp className="w-3 h-3 mr-1" />
+            Personalizado
+          </Badge>
         </div>
 
-        {/* Recommendations Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-slate-900">Recomendaciones para ti</h2>
-            <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200">
-              <TrendingUp className="w-3 h-3 mr-1" />
-              Personalizado
-            </Badge>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Update Profile Card */}
             <Card className="group hover:shadow-lg transition-all duration-300 border-0 shadow-md hover:-translate-y-1">
               <CardHeader className="pb-4">
@@ -130,7 +128,6 @@ export default auth0.withPageAuthRequired(async function HomePage (){
             </Suspense>
           </CardContent>
         </Card>
-      </main>
     </div>
   )
 } ) ; 

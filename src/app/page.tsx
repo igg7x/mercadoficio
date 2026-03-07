@@ -10,28 +10,28 @@ export default function LandingPage() {
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-white" />
+        <div className="w-full mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+              <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <span className="text-2xl font-heading font-bold text-slate-900">MercadOficio</span>
+            <span className="text-lg sm:text-xl md:text-2xl font-heading font-bold text-slate-900 truncate">MercadOficio</span>
           </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#servicios" className="text-slate-600 hover:text-primary transition-colors">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+            <a href="#servicios" className="text-xs lg:text-sm text-slate-600 hover:text-primary transition-colors">
               Servicios
             </a>
-            <a href="#como-funciona" className="text-slate-600 hover:text-primary transition-colors">
+            <a href="#como-funciona" className="text-xs lg:text-sm text-slate-600 hover:text-primary transition-colors">
               Cómo Funciona
             </a>
-            <a href="#testimonios" className="text-slate-600 hover:text-primary transition-colors">
+            <a href="#testimonios" className="text-xs lg:text-sm text-slate-600 hover:text-primary transition-colors">
               Testimonios
             </a>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="text-xs lg:text-sm">
               Clientes
             </Button>
             <Link href="/register">
-              <Button size="sm" className="bg-primary hover:bg-primary/90">
+              <Button size="sm" className="bg-primary hover:bg-primary/90 text-xs lg:text-sm">
                 Ingresar
               </Button>
             </Link>
@@ -40,63 +40,63 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-16 lg:py-14">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
+      <section className="py-8 sm:py-12 md:py-16 lg:py-20">
+        <div className="w-full mx-auto px-3 sm:px-4 md:px-6">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="space-y-3 sm:space-y-4">
+                <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 text-xs sm:text-sm">
                   ✨ Más de 10,000 profesionales satisfechos
                 </Badge>
-                <h1 className="text-4xl lg:text-6xl font-heading font-bold text-slate-900 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-slate-900 leading-tight">
                   Conecta con los <span className="text-primary">Mejores Profesionales</span>
                 </h1>
-                <p className="text-xl text-slate-600 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-slate-600 leading-relaxed">
                   Encuentra servicios de calidad para cada necesidad. Descubre el poder de la colaboración en nuestra
                   plataforma de confianza.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-lg group">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm md:text-base group w-full sm:w-auto">
                   Explorar Servicios
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button variant="outline" size="lg" className="px-8 py-3 text-lg bg-transparent">
+                <Button variant="outline" size="lg" className="text-xs sm:text-sm md:text-base bg-transparent w-full sm:w-auto">
                   Ver Cómo Funciona
                 </Button>
               </div>
 
-              <div className="flex items-center space-x-8 pt-4">
-                <div className="flex items-center space-x-2">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 pt-2 sm:pt-4">
+                <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-slate-300">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-300">
                       <img
                         src="http://randomuser.me/api/portraits/women/1.jpg"
                         alt="User Avatar"
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover"
                       />
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-slate-400">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-400">
                       <img
                         src="http://randomuser.me/api/portraits/women/2.jpg"
                         alt="User Avatar"
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover"
                       />
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-slate-500">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-500">
                       <img
                         src="http://randomuser.me/api/portraits/women/3.jpg"
                         alt="User Avatar"
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover"
                       />
                     </div>
                   </div>
-                  <span className="text-sm text-slate-600">+10k usuarios activos</span>
+                  <span className="text-xs sm:text-sm text-slate-600">+10k usuarios activos</span>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-yellow-400 text-yellow-400" />
                   ))}
                   <span className="text-sm text-slate-600 ml-2">4.9/5 rating</span>
                 </div>

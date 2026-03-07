@@ -92,59 +92,59 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="bg-emerald-600 pt-8 pb-20 sm:px-6 lg:px-16 rounded-2xl">
+      <div className="bg-emerald-600 pt-6 sm:pt-8 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-16 rounded-2xl">
         <div className="w-full mx-auto">
-          <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
               {/* Profile Image */}
               <div className="relative flex-shrink-0">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center border-4 border-emerald-100">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center border-4 border-emerald-100">
                     <img src={user.picture} alt={user.name} className="w-full h-full object-cover rounded-full" />
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
-                  <Camera className="h-4 w-4 text-white" />
+                <div className="absolute -bottom-1 -right-1 w-7 h-7 sm:w-8 sm:h-8 bg-emerald-600 rounded-full flex items-center justify-center">
+                  <Camera className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                 </div>
               </div>
 
               {/* User Info */}
-              <div className="flex-1 min-w-0">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex-1 min-w-0 w-full">
+                <div className="flex flex-col gap-4 sm:gap-6">
                   <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{mockUser.name}</h1>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 sm:mb-3">
+                      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">{mockUser.name}</h1>
                       {user.email_verified && (
-                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100">
+                        <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 w-fit text-xs sm:text-sm">
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Verificado
                         </Badge>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 text-gray-600 text-sm mb-3">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3">
                       <div className="flex items-center gap-1">
-                        <Mail className="h-4 w-4" />
-                        {user.email}
+                        <Mail className="h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">{user.email}</span>
                       </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-500">
+                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-6 text-xs sm:text-sm text-gray-500">
                       <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
+                        <Calendar className="h-4 w-4 flex-shrink-0" />
                         Miembro desde {mockUser.joinDate}
                       </div>
                       <div className="flex items-center gap-1">
-                        <Briefcase className="h-4 w-4" />
+                        <Briefcase className="h-4 w-4 flex-shrink-0" />
                         {mockUser.completedJobs} trabajos completados
                       </div>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <Button variant="outline" className="bg-white">
-                      <Mail className="h-4 w-4 mr-2" />
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
+                    <Button variant="outline" className="bg-white text-xs sm:text-sm">
+                      <Mail className="h-4 w-4 mr-1 sm:mr-2" />
                       Contactar
                     </Button>
-                    <Button className="bg-emerald-600 hover:bg-emerald-700">
-                      <Edit className="h-4 w-4 mr-2" />
+                    <Button className="bg-emerald-600 hover:bg-emerald-700 text-xs sm:text-sm">
+                      <Edit className="h-4 w-4 mr-1 sm:mr-2" />
                       Editar Perfil
                     </Button>
                   </div>
@@ -155,125 +155,125 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
         </div>
       </div>
 
-      <div className="mx-auto px-4 sm:px-6 lg:px-16 -mt-12 mb-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="text-center p-4 sm:p-6 shadow-sm">
+      <div className="mx-auto px-3 sm:px-4 md:px-6 lg:px-16 -mt-10 sm:-mt-12 mb-6 sm:mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+          <Card className="text-center p-3 sm:p-4 md:p-6 shadow-sm">
             <div className="flex flex-col items-center">
-              <CheckCircle className="h-8 w-8 text-emerald-600 mb-3" />
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.completedJobs}</div>
-              <div className="text-sm text-gray-600">Trabajos Completados</div>
+              <CheckCircle className="h-6 w-6 sm:h-8 sm:w-8 text-emerald-600 mb-2 sm:mb-3" />
+              <div className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 mb-0.5 sm:mb-1">{mockUser.completedJobs}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Trabajos Completados</div>
             </div>
           </Card>
-          <Card className="text-center p-4 sm:p-6 shadow-sm">
+          <Card className="text-center p-3 sm:p-4 md:p-6 shadow-sm">
             <div className="flex flex-col items-center">
-              <Star className="h-8 w-8 text-yellow-500 mb-3" />
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.rating}</div>
-              <div className="text-sm text-gray-600">Calificación Promedio</div>
+              <Star className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-500 mb-2 sm:mb-3" />
+              <div className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 mb-0.5 sm:mb-1">{mockUser.rating}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Calificación Promedio</div>
             </div>
           </Card>
-          <Card className="text-center p-4 sm:p-6 shadow-sm">
+          <Card className="text-center p-3 sm:p-4 md:p-6 shadow-sm">
             <div className="flex flex-col items-center">
-              <Heart className="h-8 w-8 text-red-500 mb-3" />
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.satisfiedClients}</div>
-              <div className="text-sm text-gray-600">Clientes Satisfechos</div>
+              <Heart className="h-6 w-6 sm:h-8 sm:w-8 text-red-500 mb-2 sm:mb-3" />
+              <div className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 mb-0.5 sm:mb-1">{mockUser.satisfiedClients}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Clientes Satisfechos</div>
             </div>
           </Card>
-          <Card className="text-center p-4 sm:p-6 shadow-sm">
+          <Card className="text-center p-3 sm:p-4 md:p-6 shadow-sm">
             <div className="flex flex-col items-center">
-              <Trophy className="h-8 w-8 text-blue-500 mb-3" />
-              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{mockUser.yearsExperience}</div>
-              <div className="text-sm text-gray-600">Años de Experiencia</div>
+              <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-blue-500 mb-2 sm:mb-3" />
+              <div className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 mb-0.5 sm:mb-1">{mockUser.yearsExperience}</div>
+              <div className="text-xs sm:text-sm text-gray-600">Años de Experiencia</div>
             </div>
           </Card>
         </div>
       </div>
 
-      <div className=" mx-auto px-4 sm:px-6 lg:px-16">
-        <div className="flex flex-col sm:flex-row gap-2 mb-8">
+      <div className="mx-auto px-3 sm:px-4 md:px-6 lg:px-16">
+        <div className="flex flex-col sm:flex-row gap-2 mb-6 sm:mb-8">
           <Button
             onClick={() => setActiveTab("perfil")}
             variant={activeTab === "perfil" ? "default" : "outline"}
-            className={activeTab === "perfil" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+            className={`text-xs sm:text-sm ${activeTab === "perfil" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}`}
           >
             Perfil
           </Button>
           <Button
             onClick={() => setActiveTab("resenas-recibidas")}
             variant={activeTab === "resenas-recibidas" ? "default" : "outline"}
-            className={activeTab === "resenas-recibidas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+            className={`text-xs sm:text-sm ${activeTab === "resenas-recibidas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}`}
           >
             Reseñas Recibidas
           </Button>
           <Button
             onClick={() => setActiveTab("resenas-enviadas")}
             variant={activeTab === "resenas-enviadas" ? "default" : "outline"}
-            className={activeTab === "resenas-enviadas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}
+            className={`text-xs sm:text-sm ${activeTab === "resenas-enviadas" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-white"}`}
           >
             Reseñas Enviadas
           </Button>
         </div>
 
         {activeTab === "perfil" && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 pb-8">
             {/* Left Column */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Personal Information */}
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Users className="h-5 w-5 text-emerald-600" />
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                     Información Personal
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
+                <CardContent className="space-y-3 sm:space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-700 flex items-center gap-2">
                         <MapPin className="h-4 w-4" />
                         Ubicación
                       </Label>
                       <div className="mt-1 flex items-center justify-between">
-                        <span className="text-gray-500 italic">{mockUser.location}</span>
-                        <Button variant="link" className="text-emerald-600 p-0 h-auto">
+                        <span className="text-xs sm:text-sm text-gray-500 italic">{mockUser.location}</span>
+                        <Button variant="link" className="text-emerald-600 p-0 h-auto text-xs sm:text-sm">
                           Agregar
                         </Button>
                       </div>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-700 flex items-center gap-2">
                         <Mail className="h-4 w-4" />
                         Email de Contacto
                       </Label>
-                      <div className="mt-1 p-3 bg-emerald-50 rounded-lg">
-                        <span className="text-gray-900">{mockUser.email}</span>
+                      <div className="mt-1 p-2 sm:p-3 bg-emerald-50 rounded-lg">
+                        <span className="text-xs sm:text-sm text-gray-900 break-words">{mockUser.email}</span>
                       </div>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-700 flex items-center gap-2">
                         <Phone className="h-4 w-4" />
                         Teléfono de Contacto
                       </Label>
                       <div className="mt-1 flex items-center justify-between">
-                        <span className="text-gray-500 italic">No especificado</span>
-                        <Button variant="link" className="text-emerald-600 p-0 h-auto">
+                        <span className="text-xs sm:text-sm text-gray-500 italic">No especificado</span>
+                        <Button variant="link" className="text-emerald-600 p-0 h-auto text-xs sm:text-sm">
                           Agregar
                         </Button>
                       </div>
                     </div>
                     <div>
-                      <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                      <Label className="text-xs sm:text-sm font-medium text-gray-700 flex items-center gap-2">
                         <Star className="h-4 w-4" />
                         Calificación Promedio
                       </Label>
-                      <div className="mt-1 p-3 bg-yellow-50 rounded-lg flex items-center gap-2">
-                        <div className="flex">
+                      <div className="mt-1 p-2 sm:p-3 bg-yellow-50 rounded-lg flex items-center gap-2">
+                        <div className="flex gap-0.5">
                           {[1, 2, 3, 4].map((star) => (
-                            <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                            <Star key={star} className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
                           ))}
-                          <Star className="h-4 w-4 text-gray-300" />
+                          <Star className="h-3 w-3 sm:h-4 sm:w-4 text-gray-300" />
                         </div>
-                        <span className="font-medium">{mockUser.rating}</span>
-                        <span className="text-gray-500">({mockUser.reviewCount} reseñas)</span>
+                        <span className="font-medium text-xs sm:text-sm">{mockUser.rating}</span>
+                        <span className="text-gray-500 text-xs">({mockUser.reviewCount})</span>
                       </div>
                     </div>
                   </div>
@@ -283,26 +283,26 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
               {/* Categories */}
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Briefcase className="h-5 w-5 text-emerald-600" />
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Briefcase className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                     Categorías Seleccionadas
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {mockUser.categories.map((category, index) => (
-                      <div key={index} className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg">
+                      <div key={index} className="flex items-center gap-2 p-2 sm:p-3 bg-emerald-50 rounded-lg">
                         <CheckCircle className="h-4 w-4 text-emerald-600 flex-shrink-0" />
-                        <span className="text-sm text-gray-900">{category}</span>
+                        <span className="text-xs sm:text-sm text-gray-900 truncate">{category}</span>
                       </div>
                     ))}
-                    <div className="flex items-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-lg">
+                    <div className="flex items-center gap-2 p-2 sm:p-3 border-2 border-dashed border-gray-200 rounded-lg">
                       <div className="h-4 w-4 border border-gray-300 rounded flex-shrink-0"></div>
-                      <span className="text-sm text-gray-500">Tecnología</span>
+                      <span className="text-xs sm:text-sm text-gray-500">Tecnología</span>
                     </div>
-                    <div className="flex items-center gap-2 p-3 border-2 border-dashed border-gray-200 rounded-lg">
+                    <div className="flex items-center gap-2 p-2 sm:p-3 border-2 border-dashed border-gray-200 rounded-lg">
                       <div className="h-4 w-4 border border-gray-300 rounded flex-shrink-0"></div>
-                      <span className="text-sm text-gray-500">Diseño Gráfico</span>
+                      <span className="text-xs sm:text-sm text-gray-500">Diseño Gráfico</span>
                     </div>
                   </div>
                 </CardContent>
@@ -310,19 +310,19 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
             </div>
 
             {/* Right Column */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Biography */}
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Edit className="h-5 w-5 text-emerald-600" />
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Edit className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                     Biografía
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-center py-8">
-                    <p className="text-gray-500 italic mb-4">{mockUser.bio}</p>
-                    <Button className="bg-emerald-600 hover:bg-emerald-700">Escribir Biografía</Button>
+                  <div className="text-center py-6 sm:py-8">
+                    <p className="text-xs sm:text-sm text-gray-500 italic mb-3 sm:mb-4">{mockUser.bio}</p>
+                    <Button className="bg-emerald-600 hover:bg-emerald-700 text-xs sm:text-sm">Escribir Biografía</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -330,21 +330,21 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
               {/* Quick Actions */}
               <Card className="shadow-sm">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Award className="h-5 w-5 text-emerald-600" />
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Award className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
                     Acciones Rápidas
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button variant="outline" className="w-full justify-start bg-white">
+                <CardContent className="space-y-2 sm:space-y-3">
+                  <Button variant="outline" className="w-full justify-start bg-white text-xs sm:text-sm">
                     <Edit className="h-4 w-4 mr-2" />
                     Editar Información
                   </Button>
-                  <Button variant="outline" className="w-full justify-start bg-white">
+                  <Button variant="outline" className="w-full justify-start bg-white text-xs sm:text-sm">
                     <Camera className="h-4 w-4 mr-2" />
                     Cambiar Foto
                   </Button>
-                  <Button variant="outline" className="w-full justify-start bg-white">
+                  <Button variant="outline" className="w-full justify-start bg-white text-xs sm:text-sm">
                     <Award className="h-4 w-4 mr-2" />
                     Ver Certificaciones
                   </Button>
@@ -355,33 +355,33 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
         )}
 
         {activeTab === "resenas-recibidas" && (
-          <div className="space-y-6 w-full pb-8">
+          <div className="space-y-4 sm:space-y-6 w-full pb-8">
             {mockUser.reviews.map((review, index) => (
               <Card key={index} className="shadow-sm">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm font-medium text-emerald-600">{review.initials}</span>
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs sm:text-sm font-medium text-emerald-600">{review.initials}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                        <div>
-                          <h4 className="font-medium text-gray-900">{review.client}</h4>
-                          <p className="text-sm text-gray-600">{review.service}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 mb-2">
+                        <div className="min-w-0">
+                          <h4 className="font-medium text-gray-900 text-sm sm:text-base truncate">{review.client}</h4>
+                          <p className="text-xs sm:text-sm text-gray-600 truncate">{review.service}</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <div className="flex">
+                        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 text-xs">
+                          <div className="flex gap-0.5">
                             {[...Array(review.rating)].map((_, i) => (
-                              <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                              <Star key={i} className="h-3 w-3 sm:h-4 sm:w-4 fill-yellow-400 text-yellow-400" />
                             ))}
                             {[...Array(5 - review.rating)].map((_, i) => (
-                              <Star key={i} className="h-4 w-4 text-gray-300" />
+                              <Star key={i} className="h-3 w-3 sm:h-4 sm:w-4 text-gray-300" />
                             ))}
                           </div>
-                          <span className="text-sm text-gray-500">{review.date}</span>
+                          <span className="text-gray-500">{review.date}</span>
                         </div>
                       </div>
-                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="text-xs sm:text-sm text-gray-700">{review.comment}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -391,16 +391,16 @@ const ProfilePage = ( { user } :{ user: UserSession  }) => {
         )}
 
         {activeTab === "resenas-enviadas" && (
-          <div className="text-center py-16">
-            <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Star className="h-12 w-12 text-gray-400" />
+          <div className="text-center py-12 sm:py-16">
+            <div className="max-w-md mx-auto px-4">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <Star className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No has enviado reseñas aún</h3>
-              <p className="text-gray-600 mb-6">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">No has enviado reseñas aún</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-6">
                 Cuando completes trabajos, podrás dejar reseñas sobre tu experiencia.
               </p>
-              <Button className="bg-emerald-600 hover:bg-emerald-700">Explorar Trabajos</Button>
+              <Button className="bg-emerald-600 hover:bg-emerald-700 text-xs sm:text-sm">Explorar Trabajos</Button>
             </div>
           </div>
         )}

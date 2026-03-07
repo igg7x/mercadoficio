@@ -160,13 +160,13 @@ const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
   return (
     <>
       {/* TABLE */}
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead key={header.id} className="text-xs sm:text-sm px-2 sm:px-4 py-2 sm:py-3">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -184,7 +184,7 @@ const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="text-xs sm:text-sm px-2 sm:px-4 py-2 sm:py-3">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -195,7 +195,7 @@ const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell colSpan={columns.length} className="h-20 sm:h-24 text-center text-xs sm:text-sm">
                   No hay postulantes
                 </TableCell>
               </TableRow>
@@ -206,22 +206,22 @@ const ApplicantsTable: React.FC<ApplicantsTableProps> = ({
 
       {/* DIALOG */}
       <Dialog open={show} onOpenChange={toogle}>
-        <DialogContent>
+        <DialogContent className="w-[calc(100%-2rem)] sm:max-w-md px-4 sm:px-6 py-4 sm:py-6">
           <DialogHeader>
-            <DialogTitle>
-              <InfoIcon className="inline-block h-5 w-5 mr-2" />
+            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <InfoIcon className="w-4 h-4 sm:w-5 sm:h-5" />
               Elegir postulante
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-xs sm:text-sm mt-2">
               Esta acción no se puede deshacer. El trabajo pasará al estado{" "}
               <span className="font-bold underline">cerrado</span>.
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit}>
-            <DialogFooter className="flex flex-col gap-4 mt-4">
-              <Button type="submit">Confirmar</Button>
-              <Button type="button" variant="destructive" onClick={toogle}>
+            <DialogFooter className="flex flex-col gap-2 sm:gap-3 mt-4 sm:mt-6">
+              <Button type="submit" className="text-xs sm:text-sm w-full">Confirmar</Button>
+              <Button type="button" variant="destructive" onClick={toogle} className="text-xs sm:text-sm w-full">
                 Cancelar
               </Button>
             </DialogFooter>
