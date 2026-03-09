@@ -1,6 +1,5 @@
 "use client"
-
-import { useState } from "react"
+import { useState , use } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -22,15 +21,16 @@ import {
   Heart,
   BookmarkPlus,
 } from "lucide-react"
-import { auth0 } from "@/lib/auth0"
-import { Page, Job } from "@/lib/api/types"
+import { Page, Job, Category } from "@/lib/api/types"
 import Pagination from "../../components/pagination"
+import { useJobsByUserCustomer } from "@/hooks/use-jobs"
+import JobSkeleton from "./jobs-skeleton"
 
 interface EmpleosPortalProps {
-  jobsPage: Page<Job>
+  categories: Category[]
 }
 
-export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
+export default function EmpleosPortal({ categories }: EmpleosPortalProps) {
   const [activeTab, setActiveTab] = useState("active")
   const [searchQuery, setSearchQuery] = useState("")
   const [filters, setFilters] = useState({
@@ -39,9 +39,17 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
     salary: "",
     type: "",
   })
-
-  // Use real job data
-  const availableJobs = jobsPage.content.map(job => ({
+  // Use React Query for jobs data with pagination
+  const {
+    data: jobsPage,
+    isLoading,
+    isError,
+    nextPage,
+    prevPage,
+    page,
+  } = useJobsByUserCustomer()
+  // Transform job data for display
+  const availableJobs = jobsPage?.content.map(job => ({
     id: job.jobId,
     title: job.title,
     company: "Empresa", // This might need to be added to Job type
@@ -55,17 +63,7 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
     applicants: job.applicants,
     rating: 4.5, // This might need to be added to Job type
     featured: false, // This might need to be added to Job type
-  }))
-
-  const categories = [
-    "Tecnología",
-    "Diseño y Creatividad",
-    "Construcción y Hogar",
-    "Servicios Profesionales",
-    "Mantenimiento",
-    "Educación",
-    "Salud y Bienestar",
-  ]
+  })) || []
 
   const jobTypes = ["Tiempo Completo", "Medio Tiempo", "Por Proyecto", "Freelance", "Remoto"]
 
@@ -99,20 +97,18 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
                   />
                 </div>
               </div>
-
               <Select value={filters.category} onValueChange={(value) => setFilters({ ...filters, category: value })}>
                 <SelectTrigger className="h-9 sm:h-10 border-slate-200 focus:border-emerald-500 text-sm">
                   <SelectValue placeholder="Categoría" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
+                    <SelectItem key={category.name} value={category.name}>
+                      {category.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
                 <Input
@@ -122,7 +118,6 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
                   className="pl-10 h-9 sm:h-10 border-slate-200 focus:border-emerald-500 focus:ring-emerald-500 text-sm"
                 />
               </div>
-
               <Select value={filters.type} onValueChange={(value) => setFilters({ ...filters, type: value })}>
                 <SelectTrigger className="h-9 sm:h-10 border-slate-200 focus:border-emerald-500 text-sm">
                   <SelectValue placeholder="Tipo" />
@@ -169,7 +164,7 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
                     <div className="flex items-center gap-2 sm:gap-3">
                       <h3 className="text-base sm:text-lg font-semibold text-slate-900">Ofertas Disponibles</h3>
                       <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs sm:text-sm">
-                        {availableJobs.length} trabajos
+                        {isLoading ? "Cargando..." : `${availableJobs.length} trabajos`}
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2">
@@ -181,95 +176,144 @@ export default function EmpleosPortal({ jobsPage }: EmpleosPortalProps) {
                   </div>
 
                   <div className="grid gap-4 sm:gap-6">
-                    {availableJobs.map((job) => (
-                      <Card
-                        key={job.id}
-                        className="border-0 shadow-md hover:shadow-lg transition-all duration-200 group"
-                      >
-                        <CardContent className="p-4 sm:p-6">
-                          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6">
-                            {/* Main Job Info */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 sm:mb-3">
-                                <h3 className="text-lg sm:text-xl font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors truncate">
-                                  {job.title}
-                                </h3>
-                                {job.featured && (
-                                  <Badge className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-xs sm:text-sm w-fit">
-                                    Destacado
-                                  </Badge>
-                                )}
+                    {isLoading ? (
+                      // Show skeletons while loading
+                      Array.from({ length: 3 }).map((_, index) => (
+                        <JobSkeleton key={index} />
+                      ))
+                    ) : isError ? (
+                      // Show error state
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <History className="w-8 h-8 text-red-400" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-slate-900 mb-2">Error al cargar trabajos</h3>
+                        <p className="text-slate-600 mb-4">
+                          No se pudieron cargar los trabajos. Inténtalo de nuevo.
+                        </p>
+                        <Button
+                          onClick={() => window.location.reload()}
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                        >
+                          Reintentar
+                        </Button>
+                      </div>
+                    ) : availableJobs.length === 0 ? (
+                      // Show empty state
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                          <Briefcase className="w-8 h-8 text-slate-400" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-slate-900 mb-2">No hay trabajos disponibles</h3>
+                        <p className="text-slate-600">
+                          No se encontraron trabajos que coincidan con tus criterios.
+                        </p>
+                      </div>
+                    ) : (
+                      // Show jobs
+                      availableJobs.map((job) => (
+                        <Card
+                          key={job.id}
+                          className="border-0 shadow-md hover:shadow-lg transition-all duration-200 group"
+                        >
+                          <CardContent className="p-4 sm:p-6">
+                            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6">
+                              {/* Main Job Info */}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2 sm:mb-3">
+                                  <h3 className="text-lg sm:text-xl font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors truncate">
+                                    {job.title}
+                                  </h3>
+                                  {job.featured && (
+                                    <Badge className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-xs sm:text-sm w-fit">
+                                      Destacado
+                                    </Badge>
+                                  )}
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-slate-600 mb-3 sm:mb-4 text-xs sm:text-sm">
+                                  <div className="flex items-center gap-1">
+                                    <Building2 className="w-4 h-4 flex-shrink-0" />
+                                    <span className="font-medium truncate">{job.company}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <MapPin className="w-4 h-4 flex-shrink-0" />
+                                    <span className="truncate">{job.location}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <DollarSign className="w-4 h-4 flex-shrink-0" />
+                                    <span className="font-medium">{job.salary}</span>
+                                  </div>
+                                </div>
+
+                                <p className="text-slate-600 mb-3 sm:mb-4 leading-relaxed text-sm line-clamp-2 sm:line-clamp-3">{job.description}</p>
+
+                                <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
+                                  {job.requirements.slice(0, 3).map((req, index) => (
+                                    <Badge key={index} variant="outline" className="text-xs">
+                                      {req}
+                                    </Badge>
+                                  ))}
+                                  {job.requirements.length > 3 && (
+                                    <Badge variant="outline" className="text-xs">
+                                      +{job.requirements.length - 3} más
+                                    </Badge>
+                                  )}
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500">
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="w-4 h-4 flex-shrink-0" />
+                                    <span>Publicado {job.posted}</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Users className="w-4 h-4 flex-shrink-0" />
+                                    <span>{job.applicants} aplicantes</span>
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 flex-shrink-0" />
+                                    <span>{job.rating}</span>
+                                  </div>
+                                </div>
                               </div>
 
-                              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-slate-600 mb-3 sm:mb-4 text-xs sm:text-sm">
-                                <div className="flex items-center gap-1">
-                                  <Building2 className="w-4 h-4 flex-shrink-0" />
-                                  <span className="font-medium truncate">{job.company}</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                                  <span className="truncate">{job.location}</span>
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <DollarSign className="w-4 h-4 flex-shrink-0" />
-                                  <span className="font-medium">{job.salary}</span>
-                                </div>
-                              </div>
-
-                              <p className="text-slate-600 mb-3 sm:mb-4 leading-relaxed text-sm line-clamp-2 sm:line-clamp-3">{job.description}</p>
-
-                              <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
-                                {job.requirements.slice(0, 3).map((req, index) => (
-                                  <Badge key={index} variant="outline" className="text-xs">
-                                    {req}
-                                  </Badge>
-                                ))}
-                                {job.requirements.length > 3 && (
-                                  <Badge variant="outline" className="text-xs">
-                                    +{job.requirements.length - 3}
-                                  </Badge>
-                                )}
-                              </div>
-
-                              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500">
-                                <div className="flex items-center gap-1">
-                                  <Clock className="w-4 h-4 flex-shrink-0" />
-                                  {job.posted}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <Users className="w-4 h-4 flex-shrink-0" />
-                                  {job.applicants} aplicantes
-                                </div>
-                                <div className="flex items-center gap-1">
-                                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400 flex-shrink-0" />
-                                  {job.rating}
+                              {/* Action Buttons */}
+                              <div className="flex flex-row md:flex-col gap-2 mt-4 md:mt-0 md:ml-4">
+                                <Button
+                                  size="sm"
+                                  className="flex-1 md:flex-none bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white group text-xs sm:text-sm"
+                                >
+                                  Aplicar
+                                  <ArrowRight className="w-4 h-4 ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                                <div className="flex gap-1">
+                                  <Button variant="outline" size="sm" className="p-2 bg-transparent h-9 w-9 sm:w-10 sm:h-10">
+                                    <Heart className="w-4 h-4" />
+                                  </Button>
+                                  <Button variant="outline" size="sm" className="p-2 bg-transparent h-9 w-9 sm:w-10 sm:h-10">
+                                    <BookmarkPlus className="w-4 h-4" />
+                                  </Button>
                                 </div>
                               </div>
                             </div>
-
-                            {/* Action Buttons */}
-                            <div className="flex flex-row md:flex-col gap-2 mt-4 md:mt-0 md:ml-4">
-                              <Button
-                                size="sm"
-                                className="flex-1 md:flex-none bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white group text-xs sm:text-sm"
-                              >
-                                Aplicar
-                                <ArrowRight className="w-4 h-4 ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform" />
-                              </Button>
-                              <div className="flex gap-1">
-                                <Button variant="outline" size="sm" className="p-2 bg-transparent h-9 w-9 sm:w-10 sm:h-10">
-                                  <Heart className="w-4 h-4" />
-                                </Button>
-                                <Button variant="outline" size="sm" className="p-2 bg-transparent h-9 w-9 sm:w-10 sm:h-10">
-                                  <BookmarkPlus className="w-4 h-4" />
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          </CardContent>
+                        </Card>
+                      ))
+                    )}
                   </div>
+
+                  {/* Pagination */}
+                  {!isLoading && !isError && availableJobs.length > 0 && jobsPage && (
+                    <Pagination
+                      currentPage={page}
+                      isLastPage={jobsPage.last}
+                      isFirstPage={page === 0}
+                      totalPages={jobsPage.totalPages}
+                      pageType="active"
+                      onPrevPage={prevPage}
+                      onNextPage={nextPage}
+                    />
+                  )}
                 </div>
               </TabsContent>
 

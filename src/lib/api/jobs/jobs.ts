@@ -3,13 +3,11 @@ import { HTTP } from "@/lib/utils";
 import { Page , Job  ,JobUpdate ,JobStats, JobApplication} from "../types";
 
 export const getJobsByUserCustomer = async (pageParam  : number = 0) : Promise<Page<Job>> => 
-{
-    return apiRequest({
-        path: `/jobs/customer?page=${pageParam}&size=7`,
+{return apiRequest({
+        path: `/api/jobs?path=/jobs/customer?page=${pageParam}&size=7`,
         method: HTTP.GET,
     });
 }
-
 
 export const getJobsByCategories = async (pageParam :number = 0) : Promise<Page<Job>> => {
   return apiRequest({
@@ -24,8 +22,6 @@ export const getJobsStatsByUserCustomer = async () : Promise<JobStats> => {
     path: `/jobs/customer/stats`,
   });
 };
-
-
 
 export const getJobsHistorialByUserCustomer = async (pageParam : number = 0) : Promise<Page<Job>> => {
   return apiRequest( {
@@ -81,8 +77,6 @@ export const deleteJob = async (jobId :number) : Promise<void> => {
     path: `/jobs/delete/${jobId}`,
   });
 };
-
-
 
 export const getApplicantsByJobId = async (jobId : string , pageParam : number = 0) : Promise<Page<JobApplication>> => {
   return apiRequest({

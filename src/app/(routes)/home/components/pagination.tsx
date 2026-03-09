@@ -9,6 +9,8 @@ interface PaginationProps {
   isFirstPage: boolean;
   totalPages?: number;
   pageType: "active" | "history"; // ✅ Nuevo: identificar qué paginación es
+  onPrevPage?: () => void; // Optional callback for custom pagination
+  onNextPage?: () => void; // Optional callback for custom pagination
 }
 
 const Pagination = ({
@@ -17,6 +19,8 @@ const Pagination = ({
   isFirstPage,
   totalPages,
   pageType,
+  onPrevPage,
+  onNextPage,
 }: PaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,13 +37,21 @@ const Pagination = ({
 
   const prevPage = () => {
     if (!isFirstPage) {
-      handlePageChange(currentPage - 1);
+      if (onPrevPage) {
+        onPrevPage();
+      } else {
+        handlePageChange(currentPage - 1);
+      }
     }
   };
 
   const nextPage = () => {
     if (!isLastPage) {
-      handlePageChange(currentPage + 1);
+      if (onNextPage) {
+        onNextPage();
+      } else {
+        handlePageChange(currentPage + 1);
+      }
     }
   };
 

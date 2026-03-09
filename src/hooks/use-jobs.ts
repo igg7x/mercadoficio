@@ -3,13 +3,19 @@ import { useState  , useEffect } from "react";
 import {
   getJobById,
   getJobsByCategories,
+  getJobsByUserCustomer,
   getHistorialForUserOffering,
   deleteJob,
   updateJob,
 } from "@/lib/api/jobs/jobs";
+import {
+  getJobsByUserCustomerClient,
+  getJobsByCategoriesClient,
+  getHistorialForUserOfferingClient,
+  getJobByIdClient,
+  getJobsHistorialByUserCustomerClient,
+} from "@/lib/api/client-jobs";
 import { Job ,JobUpdate ,Page} from "@/lib/api/types";
-
-
 
 interface UseJobsParams {
   func : (pageParam : number , params ?: any) => Promise<Page<Job>> ;
@@ -40,17 +46,15 @@ export const useJobs = ({ func, key, params }: UseJobsParams) => {
     queryClient.prefetchQuery({
       queryKey: [key, params, page + 1],
       queryFn: () => func(page + 1, params),
+      staleTime : 30000 
     });
   }
-
   const nextPage = () => {
     if (!data?.last) setPage(prev => prev + 1);
   };
-
   const prevPage = () => {
     setPage(prev => Math.max(prev - 1, 0));
   };
-
   return {
     data,
     isError,
@@ -63,27 +67,30 @@ export const useJobs = ({ func, key, params }: UseJobsParams) => {
   };
 };
 
-
-export const useJobsByID = (jobId : number ) => {
+export const useJobsByID = (jobId : string  ) => {
   const { data, isError, isLoading } = useQuery<Job>({
     queryKey: ["jobsByID", jobId],
-    queryFn: () => getJobById(jobId),
+    queryFn: () => getJobByIdClient(jobId),
     refetchOnWindowFocus: false,
   });
-
   return { data, isError, isLoading };
 };
 
 export const useJobsByCategories = () => {
-  return useJobs({ func: getJobsByCategories, key: "getJobsByCategories" });
+  return useJobs({ func: getJobsByCategoriesClient, key: "getJobsByCategories" });
 }
 
+export const useJobsByUserCustomer = () => {
+  return useJobs({ func: getJobsByUserCustomerClient, key: "getJobsByUserCustomer" });
+}
 
+export const useJobsHistorialCustomer = () => {
+  return useJobs({ func: getJobsHistorialByUserCustomerClient, key: "getJobsHistorialCustomer" });
+}
 
 export const useHistorialJobsByUserOffering = () => {
   const [page, setPage] = useState(0);
   const queryClient = useQueryClient();
-
   const {
     data,
     isLoading,
@@ -92,7 +99,7 @@ export const useHistorialJobsByUserOffering = () => {
     isPlaceholderData, // reemplazo de isPreviousData en v5
   } = useQuery<Page<Job>>({
     queryKey: ["getHistorialJobsByUserOffering", page],
-    queryFn: () => getHistorialForUserOffering(page),
+    queryFn: () => getHistorialForUserOfferingClient(page),
     placeholderData: keepPreviousData,
     staleTime: 5000,
     refetchOnWindowFocus: false,
@@ -103,7 +110,7 @@ export const useHistorialJobsByUserOffering = () => {
     if (!isPlaceholderData && data && !data.last) {
       queryClient.prefetchQuery({
         queryKey: ["getHistorialJobsByUserOffering", page + 1],
-        queryFn: () => getHistorialForUserOffering(page + 1),
+        queryFn: () => getHistorialForUserOfferingClient(page + 1),
       });
     }
   }, [data, isPlaceholderData, page, queryClient]);
@@ -128,7 +135,6 @@ export const useHistorialJobsByUserOffering = () => {
     page,
   };
 };
-
 
 // export const useDeleteJob = (jobId) => {
 //   const navigate = useNavigate();

@@ -7,26 +7,25 @@ import { Category ,CategoryUpdate } from "../types";
 export const getCategories = async () :Promise<Category[]> => {
   return request({
     method: HTTP.GET,
-    path: "categories/all",
+    path: "/categories/all",
   });
 };
-
-export const getCategoriesData = async () => {
+export const getCategoriesStats = async () => {
   return request({  method: HTTP.GET,
-    path: "categories/all/admin/data",
+    path: "/categories/all/admin/data",
   });
 };
 export const updateCategoryStatus = async (category_update : CategoryUpdate ) => {
   return request({
     method: HTTP.PATCH,
-    path: "categories/admin/update-status",
+    path: "/categories/admin/update-status",
     body: category_update,
   });
 };
 export const createCategory = async (category : Category ) => {
   return request({
     method: HTTP.POST,
-    path: "categories/admin/create",
+    path: "/categories/admin/create",
     body: category,
   });
 };

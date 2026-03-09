@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Category , CategoryUpdate } from "@/lib/api/types";
 import {
   getCategories,
-  getCategoriesData,
+  getCategoriesStats,
   createCategory,
   updateCategoryStatus,
 } from "@/lib/api/categories/categories";
@@ -28,7 +28,7 @@ export const useCategories = () => {
 export const useCategoriesData = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["categoriesData"],
-    queryFn: getCategoriesData,
+    queryFn: getCategoriesStats,
     refetchOnWindowFocus: false,
   });
   return {

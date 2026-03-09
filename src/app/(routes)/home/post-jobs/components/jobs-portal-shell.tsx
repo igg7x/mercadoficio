@@ -3,18 +3,21 @@ import { useState } from 'react'
 import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus, Briefcase, Clock, History, Users, TrendingUp, ArrowRight} from "lucide-react"
 import { Job , Category ,JobStats } from '@/lib/api/types'
 import StatsCards from './stats-cards'
 import JobsTabs from './jobs-tabs'
 import CreateJobDialog from './create-job-dialog'
-import { Page } from '@/lib/api/types'
 import { useModal } from '@/hooks/use-modal'
-const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories} 
-: {pageActiveJobs : Page<Job> , pageHistorialJobs : Page<Job> , stats : JobStats , categories : Category[]}
-) => {
+
+interface JobsPortalShellProps {
+  // stats: JobStats;
+  categories: Category[];
+}
+
+const JobsPortalShell = ({ stats, categories }: JobsPortalShellProps) => {
   const { show : dialogOpen, toogle: setDialogOpen } = useModal()
+  
   return    (
    <>
        <div className="min-h-screen">
@@ -41,17 +44,17 @@ const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories
         </div>
 
         {/* Stats Cards */}
-        <StatsCards stats={stats} />
+        {/* <StatsCards stats={stats} /> */}
 
         {/* Jobs Tabs */}
         <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
           <CardHeader className="pb-0 p-4 sm:p-6">
-            <JobsTabs  pageActiveJobs={pageActiveJobs} pageHistorialJobs={pageHistorialJobs} onCreateClick={setDialogOpen} />
+            <JobsTabs onCreateClick={setDialogOpen} />
           </CardHeader>
         </Card>
         <CreateJobDialog open={dialogOpen} onOpenChange={setDialogOpen} categories={categories}/>
         {/* Bottom Message */}
-        <div className="mt-6 sm:mt-8 text-center">
+        {/* <div className="mt-6 sm:mt-8 text-center">
           <Card className="border-0 shadow-sm bg-gradient-to-r from-slate-50 to-slate-100/50 inline-block">
             <CardContent className="px-4 py-3 sm:px-8 sm:py-4">
               <p className="text-slate-600 font-medium text-sm sm:text-base">Aún no has publicado ninguna oferta de trabajo</p>
@@ -60,7 +63,7 @@ const JobsPortalShell = ({pageActiveJobs , pageHistorialJobs, stats , categories
               </p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
         {/* Quick Actions */}
         <div className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <Card className="border-0 shadow-md hover:shadow-lg transition-shadow duration-200 group cursor-pointer">
